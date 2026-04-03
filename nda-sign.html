@@ -7,6 +7,7 @@
 <title>Sefirot Consulting — Mutual Protection Agreement</title>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background: #1a1a2e;
@@ -16,38 +17,271 @@
     margin: 0 auto;
     padding: 48px 32px;
   }
-  .header { margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid #222; }
-  .header .brand { font-size: 13px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: #4A5C4F; margin-bottom: 24px; }
-  .header h1 { font-size: 26px; font-weight: 700; color: #fff; letter-spacing: -0.5px; margin-bottom: 4px; }
-  .header .subtitle { font-size: 14px; color: #666; }
-  .header .meta { font-size: 11px; color: #444; margin-top: 12px; text-transform: uppercase; letter-spacing: 1.5px; }
-  .divider { height: 1px; background: linear-gradient(to right, #4A5C4F, transparent); margin: 32px 0; }
-  .section { margin-bottom: 32px; }
-  .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2.5px; color: #4A5C4F; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #1a1a1a; }
-  p { font-size: 13px; color: #bbb; margin-bottom: 14px; line-height: 1.8; }
+
+  .header {
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #222;
+  }
+  .header .brand {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #4A5C4F;
+    margin-bottom: 24px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .header .subtitle {
+    font-size: 14px;
+    color: #666;
+  }
+  .header .meta {
+    font-size: 11px;
+    color: #444;
+    margin-top: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, #4A5C4F, transparent);
+    margin: 32px 0;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: #4A5C4F;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  p {
+    font-size: 13px;
+    color: #bbb;
+    margin-bottom: 14px;
+    line-height: 1.8;
+  }
   p strong { color: #e0e0e0; }
   p em { color: #999; }
-  .clause-title { font-size: 14px; font-weight: 600; color: #fff; margin-top: 28px; margin-bottom: 10px; }
-  .option-box { background: #141414; border: 1px solid #222; border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; font-size: 13px; }
-  .option-box.selected { border-color: #4A5C4F; }
+
+  .clause-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-top: 28px;
+    margin-bottom: 10px;
+  }
+
+  .option-box {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #bbb;
+  }
+  .option-box.selected {
+    border-color: #4A5C4F;
+  }
   .option-box .check { color: #4A5C4F; font-weight: 700; margin-right: 8px; }
   .option-box .uncheck { color: #333; margin-right: 8px; }
-  .sig-block { background: #141414; border: 1px solid #222; border-radius: 8px; padding: 24px; margin-top: 16px; margin-bottom: 16px; }
-  .sig-block .sig-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #555; margin-bottom: 8px; }
-  .sig-line { border-bottom: 1px solid #444; height: 32px; margin-bottom: 8px; }
-  .sig-block p { font-size: 12px; color: #666; margin-bottom: 4px; }
-  .footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #222; }
-  .footer .contact { font-size: 12px; color: #666; line-height: 1.8; }
-  .footer .contact a { color: #4A5C4F; text-decoration: none; }
-  @media print {
-    body { background: #fff; color: #222; max-width: 100%; }
-    p { color: #333; }
-    .option-box { background: #fafafa; }
-    .sig-block { background: #fafafa; }
+
+  /* -- Signature section -- */
+  .sig-section {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid #2a2a3e;
   }
+  .sig-section h2 {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #888;
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+
+  .sig-canvas-wrap {
+    border: 1px solid #2a2a3e;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    position: relative;
+    background: #0f0f1e;
+  }
+  .sig-canvas-wrap canvas {
+    display: block;
+    width: 100%;
+    height: 180px;
+    cursor: crosshair;
+    touch-action: none;
+  }
+  .sig-canvas-wrap .clear-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: 1px solid #333;
+    color: #666;
+    font-family: inherit;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .sig-canvas-wrap .clear-btn:hover {
+    border-color: #555;
+    color: #888;
+  }
+  .sig-hint {
+    font-size: 11px;
+    color: #444;
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  .form-field {
+    margin-bottom: 16px;
+  }
+  .form-field label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  .form-field input[type="text"] {
+    background: transparent;
+    border: 1px solid #2a2a3e;
+    color: #d0d0d0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    padding: 12px 16px;
+    width: 100%;
+    max-width: 400px;
+    outline: none;
+  }
+  .form-field input[type="text"]:focus {
+    border-color: #4a5c4f;
+  }
+  .form-field .date-display {
+    font-size: 14px;
+    color: #888;
+    padding: 12px 0;
+  }
+
+  .agree-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .agree-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #4a5c4f;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .agree-row label {
+    font-size: 13px;
+    color: #888;
+    cursor: pointer;
+  }
+
+  .sign-btn {
+    display: inline-block;
+    padding: 16px 48px;
+    border: 1px solid #4a5c4f;
+    background: transparent;
+    color: #d0d0d0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    margin-top: 8px;
+  }
+  .sign-btn:hover:not(:disabled) {
+    background: #4a5c4f;
+    color: #fff;
+  }
+  .sign-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .error-msg {
+    color: #a04040;
+    font-size: 12px;
+    margin-top: 12px;
+    display: none;
+  }
+
+  .footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #222;
+  }
+  .footer .contact {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.8;
+  }
+  .footer .contact a {
+    color: #4A5C4F;
+    text-decoration: none;
+  }
+
   @media (max-width: 480px) {
     body { padding: 24px 16px; }
     .header h1 { font-size: 22px; }
+    .form-field input[type="text"] { max-width: 100%; }
+  }
+
+  @media print {
+    body { background: #fff; color: #222; max-width: 100%; }
+    p { color: #333; }
+    p strong { color: #111; }
+    .clause-title { color: #111; }
+    .option-box { background: #fafafa; border-color: #ccc; color: #333; }
+    .option-box.selected { border-color: #4A5C4F; }
+    .header .brand { color: #4A5C4F; }
+    .header h1 { color: #111; }
+    .sig-section { page-break-before: auto; }
+    .sig-canvas-wrap { display: none; }
+    .sig-hint { display: none; }
+    .clear-btn { display: none; }
+    .sign-btn { display: none; }
+    .agree-row { display: none; }
+    .sig-print-placeholder {
+      display: block !important;
+      border: 1px solid #ccc;
+      padding: 24px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #666;
+    }
+    .footer .contact a { color: #333; }
   }
 </style>
 </head>
@@ -60,8 +294,9 @@
   <div class="meta">Sefirot Consulting LLC &middot; Confidential</div>
 </div>
 
+<!-- NDA BODY -->
 <div class="section">
-  <p><strong>Effective Date:</strong> _______________ &nbsp;|&nbsp; <strong>Parties:</strong> Sefirot Consulting LLC, a New Jersey LLC, represented by _______________, Managing Partner (&ldquo;Sefirot&rdquo;) and <strong>[CLIENT NAME]</strong>, represented by <strong>[NAME, TITLE]</strong> (&ldquo;Client&rdquo;)</p>
+  <p><strong>Effective Date:</strong> <span id="effective-date-display"></span> &nbsp;|&nbsp; <strong>Parties:</strong> Sefirot Consulting LLC, a New Jersey LLC, represented by William R. Sanford, Managing Partner (&ldquo;Sefirot&rdquo;) and <strong>the undersigned party</strong> (&ldquo;Client&rdquo;)</p>
 </div>
 
 <div class="divider"></div>
@@ -176,29 +411,170 @@
 
 <div class="divider"></div>
 
-<div class="section">
-  <div class="sig-block">
-    <div class="sig-label">Sefirot Consulting LLC</div>
-    <div class="sig-line"></div>
-    <p>Name: William R. Sanford, Managing Partner</p>
-    <p>Date: _______________</p>
+<!-- SIGNATURE SECTION -->
+<div class="sig-section">
+  <h2>Electronic Signature</h2>
+
+  <div class="sig-print-placeholder" style="display:none;">Signed electronically &mdash; see digital record</div>
+
+  <div class="sig-canvas-wrap">
+    <canvas id="sig-canvas"></canvas>
+    <button class="clear-btn" id="clear-sig" type="button">Clear</button>
+  </div>
+  <div class="sig-hint">Draw your signature above using mouse or touch</div>
+
+  <div class="form-field">
+    <label for="typed-name">Full Name</label>
+    <input type="text" id="typed-name" placeholder="Type your full name" autocomplete="name">
   </div>
 
-  <div class="sig-block">
-    <div class="sig-label">[Client Name]</div>
-    <div class="sig-line"></div>
-    <p>Name: [NAME, TITLE]</p>
-    <p>Date: _______________</p>
+  <div class="form-field">
+    <label>Date</label>
+    <div class="date-display" id="sig-date"></div>
   </div>
+
+  <div class="agree-row">
+    <input type="checkbox" id="agree-check">
+    <label for="agree-check">I have read this Mutual Protection Agreement in its entirety and agree to be bound by its terms.</label>
+  </div>
+
+  <button class="sign-btn" id="sign-btn" disabled>Sign &amp; Proceed</button>
+  <div class="error-msg" id="error-msg"></div>
 </div>
 
 <div class="footer">
   <div class="contact">
     <strong>Sefirot Consulting LLC</strong><br>
-    William Sanford &middot; Managing Partner<br>
     <a href="mailto:office@sefirotconsulting.com">office@sefirotconsulting.com</a> &middot; 973.573.2261
   </div>
 </div>
+
+<script>
+(function() {
+  // -- Date --
+  var now = new Date();
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var dateStr = months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+  document.getElementById('effective-date-display').textContent = dateStr;
+  document.getElementById('sig-date').textContent = dateStr;
+
+  // -- Signature Canvas --
+  var canvas = document.getElementById('sig-canvas');
+  var ctx = canvas.getContext('2d');
+  var drawing = false;
+  var hasDrawn = false;
+
+  function resizeCanvas() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = 180;
+    ctx.strokeStyle = '#d0d0d0';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function getPos(e) {
+    var rect = canvas.getBoundingClientRect();
+    var t = e.touches ? e.touches[0] : e;
+    return { x: t.clientX - rect.left, y: t.clientY - rect.top };
+  }
+
+  function startDraw(e) {
+    e.preventDefault();
+    drawing = true;
+    var pos = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+  }
+  function draw(e) {
+    if (!drawing) return;
+    e.preventDefault();
+    hasDrawn = true;
+    var pos = getPos(e);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    updateBtn();
+  }
+  function stopDraw(e) {
+    if (drawing) { e.preventDefault(); }
+    drawing = false;
+  }
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', stopDraw);
+  canvas.addEventListener('mouseleave', stopDraw);
+  canvas.addEventListener('touchstart', startDraw, { passive: false });
+  canvas.addEventListener('touchmove', draw, { passive: false });
+  canvas.addEventListener('touchend', stopDraw);
+
+  document.getElementById('clear-sig').addEventListener('click', function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hasDrawn = false;
+    updateBtn();
+  });
+
+  // -- Form state --
+  var typedName = document.getElementById('typed-name');
+  var agreeCheck = document.getElementById('agree-check');
+  var signBtn = document.getElementById('sign-btn');
+  var errorMsg = document.getElementById('error-msg');
+
+  function updateBtn() {
+    signBtn.disabled = !(hasDrawn && typedName.value.trim().length > 1 && agreeCheck.checked);
+  }
+  typedName.addEventListener('input', updateBtn);
+  agreeCheck.addEventListener('change', updateBtn);
+
+  // -- Sign action --
+  signBtn.addEventListener('click', function() {
+    if (signBtn.disabled) return;
+
+    var name = typedName.value.trim();
+    var timestamp = Date.now();
+    var sigDataURL = canvas.toDataURL('image/png');
+
+    // Generate token: simple hash of name + timestamp
+    var tokenInput = name + '|' + timestamp;
+    var hash = 0;
+    for (var i = 0; i < tokenInput.length; i++) {
+      var c = tokenInput.charCodeAt(i);
+      hash = ((hash << 5) - hash) + c;
+      hash |= 0;
+    }
+    var token = Math.abs(hash).toString(36) + timestamp.toString(36);
+
+    // Store in localStorage
+    localStorage.setItem('sefirot_nda_signed', 'true');
+    localStorage.setItem('sefirot_nda_token', token);
+    localStorage.setItem('sefirot_nda_name', name);
+    localStorage.setItem('sefirot_nda_timestamp', timestamp.toString());
+    localStorage.setItem('sefirot_nda_signature', sigDataURL);
+
+    // Get the selected line from opener's localStorage (or default)
+    var selectedLine = localStorage.getItem('sefirot_selected_line') || 'events';
+
+    // Redirect opener
+    if (window.opener && !window.opener.closed) {
+      window.opener.postMessage({ type: 'nda_signed', token: token }, '*');
+      // Also directly navigate opener as fallback
+      window.opener.location.href = 'verified.html?token=' + token + '&line=' + selectedLine;
+    }
+
+    // Close this window after a moment
+    setTimeout(function() { window.close(); }, 600);
+
+    // If window didn't close (popup blockers, etc.), show confirmation
+    signBtn.textContent = 'Signed';
+    signBtn.disabled = true;
+    signBtn.style.borderColor = '#4a5c4f';
+    signBtn.style.background = 'rgba(74, 92, 79, 0.15)';
+  });
+})();
+</script>
 
 </body>
 </html>

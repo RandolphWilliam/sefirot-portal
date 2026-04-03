@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>Sefirot Consulting LLC</title>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -46,6 +47,14 @@
     line-height: 1.4;
   }
 
+  .verified-note {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4a5c4f;
+    margin-bottom: 32px;
+  }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -55,7 +64,11 @@
     margin-bottom: 56px;
   }
 
-  .grid button {
+  .grid a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     background: transparent;
     border: 1px solid #2a2a3e;
     color: #d0d0d0;
@@ -65,24 +78,20 @@
     padding: 20px 16px;
     cursor: pointer;
     transition: border-color 0.2s, background 0.2s;
-    text-align: center;
+    text-decoration: none;
     line-height: 1.4;
   }
-  .grid button:hover {
+  .grid a:hover {
     border-color: #4a5c4f;
     background: rgba(74, 92, 79, 0.08);
   }
-  .grid button:focus-visible {
+  .grid a:focus-visible {
     outline: 2px solid #4a5c4f;
     outline-offset: 2px;
   }
-
-  /* Last row: 2 buttons centered */
-  .grid button:nth-child(10) {
-    grid-column: 1 / 2;
-  }
-  .grid button:nth-child(11) {
-    grid-column: 2 / 3;
+  .grid a.active {
+    border-color: #4a5c4f;
+    background: rgba(74, 92, 79, 0.12);
   }
 
   .contact {
@@ -102,10 +111,6 @@
     .grid {
       grid-template-columns: 1fr 1fr;
     }
-    .grid button:nth-child(10),
-    .grid button:nth-child(11) {
-      grid-column: auto;
-    }
     body { padding: 32px 16px; }
   }
 
@@ -119,7 +124,8 @@
     body { background: #fff; color: #1a1a1a; }
     .mark-s { color: #1a1a1a; border-color: #1a1a1a; }
     .mark-text { color: #444; }
-    .grid button {
+    .verified-note { color: #4a5c4f; }
+    .grid a {
       border-color: #ccc;
       color: #1a1a1a;
       -webkit-print-color-adjust: exact;
@@ -137,18 +143,20 @@
   <div class="mark-text">Sefirot Consulting LLC</div>
 </div>
 
+<div class="verified-note">Agreement on file</div>
+
 <div class="grid">
-  <button data-line="events" onclick="openNDA('events')">Event Operations</button>
-  <button data-line="tech" onclick="openNDA('tech')">Institutional Technology</button>
-  <button data-line="family-office" onclick="openNDA('family-office')">Family Office Services</button>
-  <button data-line="brand" onclick="openNDA('brand')">Brand Development</button>
-  <button data-line="crisis" onclick="openNDA('crisis')">Crisis &amp; Continuity</button>
-  <button data-line="venue" onclick="openNDA('venue')">Venue &amp; Cultural Property</button>
-  <button data-line="audit" onclick="openNDA('audit')">Audit &amp; Assurance</button>
-  <button data-line="beverage" onclick="openNDA('beverage')">Beverage Architecture</button>
-  <button data-line="speaking" onclick="openNDA('speaking')">Speaking &amp; Advisory</button>
-  <button data-line="public-sector" onclick="openNDA('public-sector')">Public Sector &amp; Grants</button>
-  <button data-line="investment" onclick="openNDA('investment')">Investment Facilitation</button>
+  <a href="engage.html?line=events" data-line="events">Event Operations</a>
+  <a href="engage.html?line=tech" data-line="tech">Institutional Technology</a>
+  <a href="engage.html?line=family-office" data-line="family-office">Family Office Services</a>
+  <a href="engage.html?line=brand" data-line="brand">Brand Development</a>
+  <a href="engage.html?line=crisis" data-line="crisis">Crisis &amp; Continuity</a>
+  <a href="engage.html?line=venue" data-line="venue">Venue &amp; Cultural Property</a>
+  <a href="engage.html?line=audit" data-line="audit">Audit &amp; Assurance</a>
+  <a href="engage.html?line=beverage" data-line="beverage">Beverage Architecture</a>
+  <a href="engage.html?line=speaking" data-line="speaking">Speaking &amp; Advisory</a>
+  <a href="engage.html?line=public-sector" data-line="public-sector">Public Sector &amp; Grants</a>
+  <a href="engage.html?line=investment" data-line="investment">Investment Facilitation</a>
 </div>
 
 <div class="contact">
@@ -157,21 +165,24 @@
 
 <script>
 (function() {
-  var selectedLine = null;
+  // Gate: check localStorage for signed NDA
+  var signed = localStorage.getItem('sefirot_nda_signed');
+  if (signed !== 'true') {
+    window.location.href = 'index.html';
+    return;
+  }
 
-  window.openNDA = function(line) {
-    selectedLine = line;
-    localStorage.setItem('sefirot_selected_line', line);
-    window.open('nda-sign.html', 'sefirot_nda', 'width=800,height=900,scrollbars=yes,resizable=yes');
-  };
-
-  // Listen for message from NDA window to redirect
-  window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'nda_signed' && e.data.token) {
-      var line = localStorage.getItem('sefirot_selected_line') || 'events';
-      window.location.href = 'verified.html?token=' + e.data.token + '&line=' + line;
+  // Highlight the selected line from URL params
+  var params = new URLSearchParams(window.location.search);
+  var line = params.get('line');
+  if (line) {
+    var links = document.querySelectorAll('.grid a');
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].getAttribute('data-line') === line) {
+        links[i].classList.add('active');
+      }
     }
-  });
+  }
 })();
 </script>
 
