@@ -157,21 +157,16 @@
 
 <script>
 (function() {
-  var selectedLine = null;
-
+  // Check if already signed — go straight to engage
   window.openNDA = function(line) {
-    selectedLine = line;
     localStorage.setItem('sefirot_selected_line', line);
-    window.open('nda-sign.html', 'sefirot_nda', 'width=800,height=900,scrollbars=yes,resizable=yes');
-  };
-
-  // Listen for message from NDA window to redirect
-  window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'nda_signed' && e.data.token) {
-      var line = localStorage.getItem('sefirot_selected_line') || 'events';
-      window.location.href = 'verified.html?token=' + e.data.token + '&line=' + line;
+    var signed = localStorage.getItem('sefirot_nda_signed');
+    if (signed === 'true') {
+      window.location.href = 'engage.html?line=' + line;
+    } else {
+      window.location.href = 'nda-sign.html?line=' + line;
     }
-  });
+  };
 })();
 </script>
 

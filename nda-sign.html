@@ -554,24 +554,20 @@
     localStorage.setItem('sefirot_nda_timestamp', timestamp.toString());
     localStorage.setItem('sefirot_nda_signature', sigDataURL);
 
-    // Get the selected line from opener's localStorage (or default)
-    var selectedLine = localStorage.getItem('sefirot_selected_line') || 'events';
+    // Get the selected line
+    var params = new URLSearchParams(window.location.search);
+    var selectedLine = params.get('line') || localStorage.getItem('sefirot_selected_line') || 'events';
 
-    // Redirect opener
-    if (window.opener && !window.opener.closed) {
-      window.opener.postMessage({ type: 'nda_signed', token: token }, '*');
-      // Also directly navigate opener as fallback
-      window.opener.location.href = 'verified.html?token=' + token + '&line=' + selectedLine;
-    }
-
-    // Close this window after a moment
-    setTimeout(function() { window.close(); }, 600);
-
-    // If window didn't close (popup blockers, etc.), show confirmation
-    signBtn.textContent = 'Signed';
+    // Visual confirmation
+    signBtn.textContent = 'Signed — Entering\u2026';
     signBtn.disabled = true;
     signBtn.style.borderColor = '#4a5c4f';
     signBtn.style.background = 'rgba(74, 92, 79, 0.15)';
+
+    // Navigate to engagement page
+    setTimeout(function() {
+      window.location.href = 'engage.html?line=' + selectedLine;
+    }, 800);
   });
 })();
 </script>

@@ -426,7 +426,7 @@
 
 <!-- Header -->
 <div class="mark">
-  <a href="verified.html">
+  <a href="index.html">
     <div class="mark-s">S</div>
     <div class="mark-text">Sefirot Consulting LLC</div>
   </a>
@@ -568,8 +568,8 @@
 
 <!-- CTA -->
 <div class="cta">
-  <a href="#deposit">Proceed to Engagement Deposit</a>
-  <div class="note">Authorize.net secure payment</div>
+  <a href="mailto:office@sefirotconsulting.com?subject=Engagement%20Initiation&body=I%20would%20like%20to%20initiate%20an%20engagement%20under%20the%20terms%20presented.%0A%0AName%3A%0AOrganization%3A%0APreferred%20option%3A%20" id="engage-cta">Initiate Engagement</a>
+  <div class="note">973.573.2261 &middot; office@sefirotconsulting.com</div>
 </div>
 
 <!-- Footer -->
@@ -589,7 +589,9 @@
   // NDA gate check
   var signed = localStorage.getItem('sefirot_nda_signed');
   if (signed !== 'true') {
-    window.location.href = 'index.html';
+    var params = new URLSearchParams(window.location.search);
+    var line = params.get('line') || 'events';
+    window.location.href = 'nda-sign.html?line=' + line;
     return;
   }
 
