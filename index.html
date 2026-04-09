@@ -3,172 +3,820 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sefirot Consulting LLC</title>
+<title>Sefirot — Rate Card</title>
+<link rel="icon" href="Just quill.gif">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background: #1a1a2e;
-    color: #d0d0d0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 48px 24px;
+  :root {
+    --bg: #0a0a0a; --surface: #0f0f0f; --surface2: #131313;
+    --border: #272727; --border-faint: #181818;
+    --gold: #c8b89a; --gold-dim: #7a6a54;
+    --text: #e8e2d9; --text-dim: #888; --text-faint: #444;
+    --green: #5a9a6a; --red: #9a5a5a;
+    --navy: #1a2d6b; --crimson: #8b1c1c; --crimson-dim: rgba(139,28,28,0.28);
   }
 
-  .mark {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    margin-bottom: 56px;
+  body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* ── SHARED SECTION WRAPPER ── */
+  .section {
+    display: none; min-height: 100vh;
+    flex-direction: column; align-items: center; justify-content: center;
+    padding: 3rem 1.5rem; text-align: center;
+    opacity: 0; transition: opacity 0.35s ease;
   }
-  .mark-s {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    color: #e0e0e0;
-    border: 2px solid #e0e0e0;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .mark-text {
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #888;
-    line-height: 1.4;
+  .section.active { display: flex; }
+  .section.shown  { opacity: 1; }
+
+  /* ── PRE-LANDING LOGO ── */
+  .pre-logo-mark {
+    display: block; margin: 0 auto 2.5rem;
+    max-width: 260px; width: 72%; height: auto;
+    filter: drop-shadow(0 0 16px rgba(255,255,255,0.12));
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    max-width: 640px;
-    width: 100%;
-    margin-bottom: 56px;
-  }
+  /* ── NDA HEADER SIGIL ── */
+  .nda-sigil { height: 22px; width: auto; opacity: 0.7; margin-bottom: 0.6rem; display: block; }
 
-  .grid button {
-    background: transparent;
-    border: 1px solid #2a2a3e;
-    color: #d0d0d0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    padding: 20px 16px;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    text-align: center;
-    line-height: 1.4;
-  }
-  .grid button:hover {
-    border-color: #4a5c4f;
-    background: rgba(74, 92, 79, 0.08);
-  }
-  .grid button:focus-visible {
-    outline: 2px solid #4a5c4f;
-    outline-offset: 2px;
-  }
+  /* ── SHARED ELEMENTS ── */
+  .wm { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 2.5rem; }
+  .sh1 { font-size: 1rem; font-weight: normal; color: var(--gold); line-height: 1.6; margin-bottom: 0.75rem; }
+  .sp  { font-size: 0.8rem; color: var(--text-dim); line-height: 1.7; max-width: 440px; margin: 0 auto 2rem; }
 
-  /* Last row: 2 buttons centered */
-  .grid button:nth-child(10) {
-    grid-column: 1 / 2;
+  .cta-btn {
+    display: inline-block; padding: 0.8rem 2.5rem;
+    border: 1px solid var(--gold); color: var(--gold); background: transparent;
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer; font-family: inherit; transition: all 0.2s;
   }
-  .grid button:nth-child(11) {
-    grid-column: 2 / 3;
-  }
+  .cta-btn:hover { background: var(--gold); color: var(--bg); }
 
-  .contact {
-    font-size: 12px;
-    color: #555;
-    letter-spacing: 0.08em;
-  }
-  .contact a {
-    color: #666;
-    text-decoration: none;
-  }
-  .contact a:hover {
-    color: #888;
-  }
+  .err-line { font-size: 0.73rem; color: var(--red); margin-top: 0.75rem; min-height: 1.1em; }
 
-  @media (max-width: 600px) {
-    .grid {
-      grid-template-columns: 1fr 1fr;
-    }
-    .grid button:nth-child(10),
-    .grid button:nth-child(11) {
-      grid-column: auto;
-    }
-    body { padding: 32px 16px; }
+  .field-pair { display: flex; gap: 0.75rem; width: 100%; max-width: 380px; margin: 0 auto 1rem; }
+  .field-pair input {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); padding: 0.75rem 1rem; font-size: 0.88rem;
+    font-family: inherit; outline: none; transition: border-color 0.2s; min-width: 0;
   }
+  .field-pair input:focus { border-color: var(--gold); }
+  .field-pair input.yr { flex: 0 0 85px; }
+  .full-btn {
+    width: 100%; max-width: 380px; padding: 0.8rem;
+    background: transparent; border: 1px solid var(--gold); color: var(--gold);
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer; font-family: inherit; transition: all 0.2s; display: block; margin: 0 auto;
+  }
+  .full-btn:hover { background: var(--gold); color: var(--bg); }
+  .full-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
-  @media (max-width: 380px) {
-    .grid {
-      grid-template-columns: 1fr;
-    }
+  /* ── NDA SECTION (full scroll, left-aligned) ── */
+  #s-nda { display: none; min-height: 100vh; flex-direction: column; align-items: center; padding: 3rem 1rem 4rem; text-align: left; opacity: 0; transition: opacity 0.35s; }
+  #s-nda.active { display: flex; }
+  #s-nda.shown   { opacity: 1; }
+
+  .nda-wrap { width: 100%; max-width: 660px; }
+
+  .nda-hdr { padding-bottom: 1.5rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-faint); }
+  .nda-hdr .firm { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.4rem; }
+  .nda-hdr h2 { font-size: 0.95rem; font-weight: normal; color: var(--gold); margin-bottom: 0.2rem; }
+  .nda-hdr .sub { font-size: 0.7rem; color: var(--text-faint); }
+
+  .clause { margin-bottom: 1.75rem; padding-bottom: 1.75rem; border-bottom: 1px solid var(--border-faint); }
+  .clause-head { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+  .clause p, .clause ul { font-size: 0.82rem; color: var(--text-dim); line-height: 1.75; margin-bottom: 0.75rem; }
+  .clause p.plain { color: var(--text-faint); font-size: 0.78rem; }
+  .clause ul { padding-left: 1.25rem; }
+  .clause ul li { margin-bottom: 0.3rem; }
+  .clause:last-child { border-bottom: none; }
+
+  .party-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+  @media (max-width: 480px) { .party-row { grid-template-columns: 1fr; } }
+  .fg label { display: block; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.35rem; }
+  .fg input {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); padding: 0.6rem 0.75rem; font-size: 0.85rem;
+    font-family: inherit; outline: none; transition: border-color 0.2s;
+  }
+  .fg input:focus { border-color: var(--gold); }
+
+  .initial-block { background: var(--surface); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+  .initial-block p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 1rem; }
+  .initial-field { display: flex; align-items: center; gap: 0.75rem; }
+  .initial-field input {
+    width: 80px; background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); padding: 0.6rem 0.75rem; font-size: 1rem;
+    font-family: inherit; outline: none; text-align: center; text-transform: uppercase; letter-spacing: 0.1em;
+    transition: border-color 0.2s;
+  }
+  .initial-field input:focus { border-color: var(--gold); }
+  .initial-field label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-faint); }
+
+  .sig-block { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-faint); }
+  .sig-row { margin-bottom: 1.25rem; }
+  .sig-row label { display: block; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.4rem; }
+  .sig-row input {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); padding: 0.65rem 0.9rem; font-size: 0.9rem;
+    font-family: inherit; outline: none; transition: border-color 0.2s;
+  }
+  .sig-row input:focus { border-color: var(--gold); }
+  .sig-row input.cursive { font-style: italic; font-size: 1.05rem; color: var(--gold); }
+
+  .page-break { border-top: 1px dashed var(--border); margin: 2rem 0; text-align: center; }
+  .page-break span { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-faint); background: var(--bg); padding: 0 0.75rem; position: relative; top: -0.55rem; }
+
+  .submit-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1.5rem; flex-wrap: wrap; }
+  .submit-row .notice { font-size: 0.68rem; color: var(--text-faint); line-height: 1.5; flex: 1; }
+  .submit-btn {
+    padding: 0.85rem 2rem; background: var(--gold); color: var(--bg);
+    border: none; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer; font-family: inherit; white-space: nowrap; transition: opacity 0.2s;
+  }
+  .submit-btn:hover { opacity: 0.85; }
+  .submit-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* ── RATE CARD SECTION ── */
+  #s-rates {
+    display: none; flex-direction: column; align-items: stretch; padding: 0;
+    text-align: left; opacity: 0; transition: opacity 0.35s; min-height: 100vh;
+    border-top: 3px solid var(--crimson);
+    box-shadow:
+      0 0 0 1px rgba(139,28,28,0.18),
+      inset 0 0 60px rgba(139,28,28,0.03),
+      0 -1px 0 rgba(26,45,107,0.5);
+    background:
+      linear-gradient(180deg, rgba(139,28,28,0.04) 0%, transparent 180px),
+      var(--bg);
+  }
+  #s-rates.active { display: flex; }
+  #s-rates.shown   { opacity: 1; }
+
+  .rc-header {
+    border-bottom: 1px solid rgba(139,28,28,0.35);
+    background: linear-gradient(180deg, rgba(139,28,28,0.07) 0%, rgba(139,28,28,0.02) 100%);
+    padding: 0.75rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  }
+  .rc-header .hl { display: flex; align-items: center; gap: 1.25rem; }
+  .s-logo { width: 36px; height: 36px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .s-logo img { width: 36px; height: 36px; object-fit: contain; display: block; }
+  .rc-title { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
+  .rc-sub   { font-size: 0.7rem; color: var(--text-dim); }
+  .rc-contact { text-align: right; font-size: 0.67rem; color: var(--text-faint); line-height: 1.7; }
+  .rc-contact a { color: var(--text-faint); text-decoration: none; }
+
+  .context-bar {
+    background: var(--surface);
+    border-bottom: 1px solid rgba(139,28,28,0.2);
+    border-left: 2px solid rgba(139,28,28,0.45);
+    padding: 0.4rem 1rem;
+  }
+  .context-bar .yr-label { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+  .context-bar p { font-size: 0.78rem; color: var(--text-dim); line-height: 1.65; }
+
+  .rc-main { padding: 0.7rem 1rem 1.5rem; max-width: 960px; width: 100%; margin: 0 auto; }
+
+  .opt-tabs {
+    display: flex; gap: 0.3rem; margin-bottom: 2rem;
+    padding: 0.3rem;
+    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.38) 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-bottom-color: rgba(0,0,0,0.6);
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .tab-btn {
+    flex: 1; padding: 0.65rem 0.5rem; font-family: inherit; font-size: 0.6rem;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+    border-radius: 5px; text-align: center; white-space: nowrap;
+    color: var(--text-faint);
+    background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-bottom-color: rgba(0,0,0,0.4);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4);
+    transition: all 0.2s ease;
+  }
+  .tab-btn:hover {
+    color: var(--text-dim);
+    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+    border-color: rgba(255,255,255,0.12);
+    border-bottom-color: rgba(0,0,0,0.4);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.09), 0 1px 4px rgba(0,0,0,0.5);
+  }
+  .tab-btn.active {
+    color: var(--gold);
+    background: linear-gradient(180deg, rgba(191,161,101,0.22) 0%, rgba(191,161,101,0.08) 100%);
+    border-color: rgba(191,161,101,0.35);
+    border-top-color: rgba(191,161,101,0.5);
+    border-bottom-color: rgba(100,80,40,0.5);
+    box-shadow:
+      inset 0 1px 0 rgba(255,220,140,0.18),
+      inset 0 -1px 0 rgba(0,0,0,0.3),
+      0 0 10px rgba(191,161,101,0.18),
+      0 2px 6px rgba(0,0,0,0.45);
+    text-shadow: 0 0 12px rgba(191,161,101,0.5);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .opt-head { margin-bottom: 0.6rem; }
+  .opt-num   { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.15rem; }
+  .opt-title { font-size: 0.95rem; font-weight: normal; color: var(--gold); margin-bottom: 0.2rem; }
+  .opt-desc  { font-size: 0.75rem; color: var(--text-dim); line-height: 1.5; }
+
+  .p-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+  @media (max-width: 640px) { .p-cols { grid-template-columns: 1fr; } }
+
+  .calc-box { background: var(--surface); border: 1px solid var(--border); padding: 0.75rem; }
+  .c-label  { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.45rem; display: block; }
+  .c-input  {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); padding: 0.7rem 0.9rem; font-size: 1rem;
+    font-family: inherit; outline: none; margin-bottom: 1.1rem; transition: border-color 0.2s;
+  }
+  .c-input:focus { border-color: var(--gold); animation: none; }
+  .c-input::placeholder { color: var(--text-faint); font-size: 0.85rem; }
+  @keyframes inputPulse {
+    0%,100% { border-color: var(--border); box-shadow: none; }
+    50%      { border-color: rgba(191,161,101,0.45); box-shadow: 0 0 8px rgba(191,161,101,0.14), inset 0 0 0 1px rgba(191,161,101,0.08); }
+  }
+  .c-input:not(:focus):placeholder-shown { animation: inputPulse 2.4s ease-in-out infinite; }
+
+  .r-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.28rem 0; border-bottom: 1px solid var(--border-faint); font-size: 0.76rem; }
+  .r-row:last-child { border-bottom: none; }
+  .r-row .rl { color: var(--text-dim); }
+  .r-row .rv { font-family: 'Courier New', monospace; color: var(--text); }
+  .r-row .rv.gold   { color: var(--gold); font-size: 0.95rem; }
+  .r-row .rv.credit { color: var(--green); }
+  .r-row .rv.dim    { color: var(--text-faint); font-size: 0.72rem; }
+  .r-div { border-bottom: 1px solid var(--border); margin: 0.4rem 0; }
+
+  .rate-tbl { width: 100%; border: 1px solid var(--border); }
+  .rate-tbl th { padding: 0.6rem 0.9rem; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); text-align: left; background: var(--surface2); border-bottom: 1px solid var(--border); font-weight: normal; }
+  .rate-tbl td { padding: 0.7rem 0.9rem; font-size: 0.78rem; color: var(--text-dim); border-bottom: 1px solid var(--border-faint); vertical-align: top; }
+  .rate-tbl tr:last-child td { border-bottom: none; }
+  .rate-tbl td.rv { font-family: 'Courier New', monospace; color: var(--text); white-space: nowrap; }
+
+  .bk-strip { margin-top: 0.4rem; }
+  .bk-label { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.65rem; }
+  .bk-row { display: flex; justify-content: space-between; align-items: center; padding: 0.22rem 0; border-bottom: 1px solid var(--border-faint); font-size: 0.73rem; }
+  .bk-row:last-child { border-bottom: none; }
+  .bk-row .br { color: var(--text-dim); }
+  .bk-row .bt { color: var(--gold); font-family: 'Courier New', monospace; }
+  .bk-row .bc { color: var(--text-faint); font-size: 0.7rem; font-family: 'Courier New', monospace; }
+
+  .note { background: #0f0f0f; border: 1px solid var(--border-faint); border-left: 2px solid var(--gold-dim); padding: 0.5rem 0.75rem; font-size: 0.72rem; color: var(--text-dim); line-height: 1.45; margin-top: 0.6rem; }
+
+  .cmp-section { margin-top: 0.9rem; }
+  .sec-head { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.5rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border-faint); }
+  .cmp-tbl { width: 100%; border: 1px solid var(--border); font-size: 0.76rem; }
+  .cmp-tbl th { padding: 0.6rem 0.9rem; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); text-align: left; background: var(--surface2); border-bottom: 1px solid var(--border); font-weight: normal; }
+  .cmp-tbl td { padding: 0.7rem 0.9rem; color: var(--text-dim); border-bottom: 1px solid var(--border-faint); font-family: 'Courier New', monospace; }
+  .cmp-tbl tr:last-child td { border-bottom: none; }
+  .cmp-tbl td.ol { font-family: 'Georgia', serif; color: var(--text-dim); }
+  .cmp-tbl td.hi { color: var(--gold); }
+
+  .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.75rem; }
+  @media (max-width: 500px) { .terms-grid { grid-template-columns: 1fr; } }
+  .tc { background: var(--surface); border: 1px solid var(--border); padding: 0.75rem 0.9rem; }
+  .tc .tl { font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.45rem; }
+  .tc-line { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-dim); padding: 0.2rem 0; border-bottom: 1px solid var(--border-faint); }
+  .tc-line:last-child { border-bottom: none; }
+  .tc-line .tp { color: var(--gold); font-family: 'Courier New', monospace; }
+  .aum-bar { height: 4px; width: 100%; margin-top: -1rem; margin-bottom: 0.9rem; transition: background 0.4s ease; background: transparent; border-radius: 0 0 2px 2px; }
+
+  .doc-footer {
+    border-top: 1px solid rgba(139,28,28,0.3);
+    background: linear-gradient(0deg, rgba(139,28,28,0.05) 0%, transparent 100%);
+    padding: 1rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.65rem; color: var(--text-faint); gap: 1rem; flex-wrap: wrap;
+  }
+  .doc-footer-logo { height: 22px; width: auto; opacity: 0.55; }
+  .doc-footer a { color: var(--text-faint); text-decoration: none; }
+  .doc-footer .conf { font-style: italic; }
+
+  @media (max-width: 500px) {
+    .rc-main { padding: 1.25rem 1.25rem 3rem; }
+    .rc-header { padding: 1.25rem; }
+    .context-bar { padding: 0.9rem 1.25rem; }
+    .doc-footer { padding: 0.9rem 1.25rem; }
   }
 
   @media print {
-    body { background: #fff; color: #1a1a1a; }
-    .mark-s { color: #1a1a1a; border-color: #1a1a1a; }
-    .mark-text { color: #444; }
-    .grid button {
-      border-color: #ccc;
-      color: #1a1a1a;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+    @page { margin: 0.85in 0.9in; size: letter portrait; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    /* hide everything except the NDA */
+    #s-pre, #s-code, #s-rates { display: none !important; }
+    body { background: #fff; color: #111; font-family: 'Georgia', serif; }
+    #s-nda { display: block !important; opacity: 1 !important; min-height: unset; padding: 0; }
+    .nda-wrap { max-width: 100%; }
+
+    /* header */
+    .nda-hdr { border-bottom: 1px solid #ccc; padding-bottom: 0.5rem; margin-bottom: 0.75rem; }
+    .nda-hdr .firm { font-size: 7pt; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-bottom: 2pt; }
+    .nda-hdr h2 { font-size: 13pt; font-weight: normal; color: #111; margin-bottom: 2pt; }
+    .nda-hdr .sub { font-size: 7.5pt; color: #666; }
+
+    /* party fields — print as underlined lines */
+    .fg label { font-size: 6.5pt; letter-spacing: 0.12em; text-transform: uppercase; color: #666; display: block; margin-bottom: 2pt; }
+    .fg input { display: block; width: 100%; border: none; border-bottom: 0.5pt solid #999; font-size: 9pt; padding: 2pt 0; background: transparent; color: #111; }
+    [style*="grid"] { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.75rem; }
+
+    /* terms box — expand fully, no scroll */
+    [style*="height:180px"] {
+      height: auto !important;
+      overflow: visible !important;
+      border: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+      margin-bottom: 0.6rem !important;
+      border-top: 0.5pt solid #ccc !important;
+      border-bottom: 0.5pt solid #ccc !important;
+      padding: 0.5rem 0 !important;
     }
-    .contact { color: #666; }
-    .contact a { color: #333; }
+    [style*="height:180px"] p { font-size: 7.5pt; line-height: 1.6; color: #333; margin-bottom: 0.4rem; }
+
+    /* signature */
+    .sig-row label { font-size: 6.5pt; letter-spacing: 0.12em; text-transform: uppercase; color: #666; display: block; margin-bottom: 2pt; }
+    .sig-row input { width: 100%; border: none; border-bottom: 1pt solid #111; font-style: italic; font-size: 11pt; padding: 3pt 0; background: transparent; color: #111; }
+    p[style*="0.63rem"] { font-size: 6.5pt; color: #666; margin: 4pt 0 0.6rem; }
+
+    /* submit row — show as footer text only */
+    .submit-row { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 0.5rem; }
+    .submit-btn { display: none; }
+    .notice { font-size: 6.5pt; color: #666; }
+    .err-line { display: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="mark">
-  <div class="mark-s">S</div>
-  <div class="mark-text">Sefirot Consulting LLC</div>
+<!-- ══ SECTION 1: PRETEXT GATE ════════════════════════ -->
+<div class="section active" id="s-pre">
+  <img src="IMG_6357red transp.gif?v=2" class="pre-logo-mark" alt="Sefirot Consulting LLC">
+  <button class="cta-btn" onclick="go('s-nda')">Sefirot Client Portal</button>
 </div>
 
-<div class="grid">
-  <button data-line="events" onclick="openNDA('events')">Event Operations</button>
-  <button data-line="tech" onclick="openNDA('tech')">Institutional Technology</button>
-  <button data-line="family-office" onclick="openNDA('family-office')">Family Office Services</button>
-  <button data-line="brand" onclick="openNDA('brand')">Brand Development</button>
-  <button data-line="crisis" onclick="openNDA('crisis')">Crisis &amp; Continuity</button>
-  <button data-line="venue" onclick="openNDA('venue')">Venue &amp; Cultural Property</button>
-  <button data-line="audit" onclick="openNDA('audit')">Audit &amp; Assurance</button>
-  <button data-line="beverage" onclick="openNDA('beverage')">Beverage Architecture</button>
-  <button data-line="speaking" onclick="openNDA('speaking')">Speaking &amp; Advisory</button>
-  <button data-line="public-sector" onclick="openNDA('public-sector')">Public Sector &amp; Grants</button>
-  <button data-line="investment" onclick="openNDA('investment')">Investment Facilitation</button>
+<!-- ══ SECTION 2: NDA ══════════════════════════════════ -->
+<div id="s-nda">
+<form class="nda-wrap" id="nda-form" autocomplete="off" onsubmit="submitNDA(event)" style="max-width:520px;">
+
+  <div class="nda-hdr">
+    <img src="Just quill.gif?v=2" class="nda-sigil" alt="Sefirot">
+    <div class="firm">Sefirot Consulting LLC</div>
+    <h2>Non-Disclosure Agreement</h2>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
+    <div class="fg"><label>Full name</label><input type="text" name="name" placeholder="First Last" required tabindex="1"></div>
+    <div class="fg"><label>Email</label><input type="email" name="email" placeholder="you@domain.com" required tabindex="2"></div>
+  </div>
+  <div style="margin-bottom:1.25rem;">
+    <div class="fg"><label>Organization <span style="color:var(--text-faint);font-size:0.6rem;letter-spacing:0.05em;text-transform:none;">(optional)</span></label><input type="text" name="org" placeholder="Company or entity" tabindex="3"></div>
+  </div>
+
+  <div style="height:180px;overflow-y:auto;border:1px solid var(--border);padding:1rem 1.1rem;margin-bottom:1.25rem;background:var(--surface);">
+    <p style="font-size:0.75rem;color:var(--text-faint);line-height:1.75;margin-bottom:0.75rem;"><strong style="color:var(--text-dim)">Confidentiality.</strong> This agreement is between Sefirot Consulting LLC (William R. Sanford, Managing Partner) and the signatory below. Both parties agree to hold in strict confidence all non-public information exchanged in the course of evaluating or conducting an engagement — including rate structures, operational methods, compliance frameworks, vendor relationships, network contacts, financial data, booking arrangements, and strategic intelligence. Information disclosed by either party may be used only for the purpose of the engagement and may not be shared with any third party without the disclosing party's written consent.</p>
+    <p style="font-size:0.75rem;color:var(--text-faint);line-height:1.75;margin-bottom:0.75rem;"><strong style="color:var(--text-dim)">Multi-client operations.</strong> Sefirot operates across multiple clients, industries, and markets simultaneously. Sefirot maintains operational compartmentalization between engagements at its own discretion and is not required to disclose the existence, identity, or nature of any other client relationship. Sefirot will not share the signatory's confidential information with other clients and will not use intelligence from one engagement to the material advantage of another. When asked about any third party subject to a confidentiality obligation, Sefirot's complete and sufficient answer is: "I have a confidentiality obligation and cannot engage on that."</p>
+    <p style="font-size:0.75rem;color:var(--text-faint);line-height:1.75;margin-bottom:0.75rem;"><strong style="color:var(--text-dim)">Intellectual property.</strong> Each party retains ownership of documents, work product, and materials created or owned prior to or independently of the engagement. Documents created during an engagement are jointly usable by both parties for the purposes of that engagement. Sefirot agrees not to use or disclose materials proprietary to the signatory's organization for the material benefit of any direct competitor — provided that this restriction does not apply to information that enters the public sphere through completion of the work (including stage design, event production elements, or other publicly visible outputs), to Sefirot's general methodologies and frameworks developed across engagements, or to any information independently developed by Sefirot without reference to the signatory's proprietary materials.</p>
+    <p style="font-size:0.75rem;color:var(--text-faint);line-height:1.75;margin-bottom:0.75rem;"><strong style="color:var(--text-dim)">Exclusions.</strong> Information is not confidential under this agreement if: it was known to the receiving party prior to disclosure, including through prior work, prior art, or prior professional knowledge; it is or becomes publicly available through no action of the receiving party; it is independently developed by the receiving party without reference to the disclosing party's information, including through standard industry practice or professional best practices; or its disclosure is required by law, court order, or regulatory authority — in which case the receiving party gives prompt written notice and cooperates to limit scope.</p>
+    <p style="font-size:0.75rem;color:var(--text-faint);line-height:1.75;margin-bottom:0.75rem;"><strong style="color:var(--text-dim)">Limitation of liability and indemnity.</strong> Sefirot acts as an independent consultant and does not serve as an officer, principal, or signatory of the signatory's organization. Sefirot does not carry commercial general liability insurance on behalf of client engagements and does not bind, execute, or sign on the client's behalf. Neither party's liability for breach of confidentiality obligations shall exceed the greater of the total fees paid by client to Sefirot in the twelve months preceding the breach or $25,000. This limitation does not apply to willful misappropriation or Sefirot's right to seek injunctive relief.</p>
+    <p style="font-size:0.75rem;color:var(--text-faint);line-height:1.75;"><strong style="color:var(--text-dim)">Term, remedies, and governing law.</strong> This agreement is in effect for three years from the date of signature, or for the duration of any active engagement plus three years following conclusion — whichever is longer. A breach causes irreparable harm. Either party may seek injunctive relief immediately and without bond. Disputes are resolved by binding arbitration under AAA Commercial Rules in Hudson County, New Jersey; the prevailing party recovers fees. New Jersey law governs. Nothing herein creates an engagement, equity relationship, or partnership — those require a separate signed instrument.</p>
+  </div>
+
+  <div class="sig-row">
+    <label>Type full name to sign electronically</label>
+    <input type="text" name="signature" class="cursive" placeholder="Full name as signature" required tabindex="3">
+  </div>
+  <p style="font-size:0.63rem;color:var(--text-faint);margin:0.5rem 0 1.25rem;line-height:1.5;">By signing above you agree this is a valid electronic signature under E-SIGN and applicable state law.</p>
+
+  <div class="submit-row">
+    <div class="notice">Mutual confidentiality · Sefirot Consulting LLC · © 2019 · office@sefirotconsulting.com</div>
+    <button type="submit" class="submit-btn" id="submit-btn" tabindex="4">I Agree &amp; Continue →</button>
+  </div>
+  <div class="err-line" id="nda-err" style="text-align:right;"></div>
+
+</form>
 </div>
 
-<div class="contact">
-  <a href="mailto:office@sefirotconsulting.com">office@sefirotconsulting.com</a>
+<!-- ══ SECTION 3: CLIENT CODE ══════════════════════════ -->
+<div class="section" id="s-code">
+  <div class="wm">Sefirot Consulting LLC</div>
+  <h1 class="sh1">Your rate card is ready.</h1>
+  <p class="sp">Enter your name and the year you first worked with Sefirot.</p>
+  <div class="field-pair">
+    <input type="text" id="c-name" placeholder="Your name" autocomplete="off">
+    <input type="text" id="c-year" class="yr" placeholder="Year" maxlength="4" autocomplete="off">
+  </div>
+  <button class="full-btn" onclick="unlockRates()">View Rate Card →</button>
+  <div class="err-line" id="code-err"></div>
 </div>
+
+<!-- ══ SECTION 4: RATE CARD ═══════════════════════════ -->
+<div id="s-rates">
+
+  <div class="rc-header">
+    <div class="hl">
+      <div class="s-logo"><img src="Just quill.gif?v=2" alt="Sefirot"></div>
+      <div>
+        <div class="rc-title">Rate Card</div>
+        <div class="rc-sub">2026_ZERORH-ZERO2022-MPWRS</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="context-bar">
+    <p>Sefirot has been administrating festival, concert, and tradeshow/convention operations in NYC and nationally at scale since 2012. Whether it's an annual flagship or a one-off activation of a sensitive property, Sefirot provides operational assurance for live events no matter your organization's degree of involvement, or the complexity of partnership(s), joint ventures, investors, stakeholders or regulatory bodies (yes, including community board). Sefirot serves our clients' interests with tact and discretion, delivered with unerring professionalism.</p>
+  </div>
+
+  <div class="rc-main">
+
+    <div class="opt-tabs">
+      <button class="tab-btn active" onclick="switchTab('t1')">Aligned</button>
+      <button class="tab-btn" onclick="switchTab('t2')">Weekly</button>
+      <button class="tab-btn" onclick="switchTab('t3')">Show</button>
+    </div>
+
+    <!-- OPT A: FULL INSTITUTIONAL -->
+    <div class="tab-panel active" id="t1">
+      <div class="opt-head">
+        <div class="opt-num">Option A</div>
+        <div class="opt-desc">Sefirot operates year-round as your dedicated production and operations partner — P&amp;L oversight, compliance architecture, venue relationship, vendor management, compounding brand maturity, and operational accountability. Guaranteed response within 12 hours, up to 330 days a year, and often sooner. Rolling 12-month term. No inactive periods.</div>
+      </div>
+      <div class="p-cols">
+        <div>
+          <div class="calc-box">
+            <label class="c-label">Annual P&amp;L under management</label>
+            <input class="c-input" type="text" id="t1-aum" inputmode="numeric" placeholder="—" oninput="onAumInput()" style="text-align:center;">
+            <div class="aum-bar" id="aum-bar"></div>
+            <div class="r-row"><span class="rl">Annual fee</span><span class="rv gold" id="a-annual">—</span></div>
+            <div class="r-div"></div>
+            <div class="r-row"><span class="rl" style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint)">Monthly installments</span></div>
+            <div class="r-row"><span class="rl">Deposit at engagement (30%)</span><span class="rv" id="a-deposit">—</span></div>
+            <div class="r-row"><span class="rl">Monthly · first Friday</span><span class="rv" id="a-monthly">—</span></div>
+            <div class="r-div"></div>
+            <div class="r-row"><span class="rl" style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">Annual prepay · prior invoices credited</span></div>
+            <div class="r-row"><span class="rl">Single payment</span><span class="rv gold" id="a-prepay">—</span></div>
+            <div class="r-row"><span class="rl">Invoices paid to date, applied as credit</span><span class="rv credit" id="a-saving">− $6,280</span></div>
+          </div>
+          <div class="note">Previous engagements this calendar year are credited in full against the annualized commitment — your history with Sefirot commonly counts in lieu of deposit. Renews until written cancellation.</div>
+        </div>
+        <div>
+          <div class="bk-strip">
+            <div class="bk-label">P&amp;L bracket</div>
+            <div class="bk-row"><span class="br">First $300,000</span><span class="bt">13%</span><span class="bc" id="a-b1">—</span></div>
+            <div class="bk-row"><span class="br">$300k – $2,000,000</span><span class="bt">8.7%</span><span class="bc" id="a-b2">—</span></div>
+            <div class="bk-row"><span class="br">$2M – $22,000,000 <span style="font-size:0.62rem;opacity:0.55">SBA no-venue ≈$20M</span></span><span class="bt">1.3%</span><span class="bc" id="a-b3">—</span></div>
+            <div class="bk-row" style="border-top:1px solid rgba(191,161,101,0.2);padding-top:0.4rem;margin-top:0.1rem;"><span class="br" style="font-size:0.7rem;color:var(--text-faint)">$22M – $40M <span style="font-size:0.62rem;opacity:0.6">SBA with facility(s)</span></span><span class="bt" style="color:var(--text-dim)">0.89%</span><span class="bc" id="a-b4">—</span></div>
+          </div>
+          <div class="note" style="margin-top:1.25rem;">At scale toward $2M, effective rate compresses to ~9.3%. The 1.3% tier above $2M drives blended rates below 5% for larger operations — below 3% above $10M. Makes adding engagements seamless with no per-engagement renegotiation.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPT B: INTERIM MANDATE -->
+    <div class="tab-panel" id="t2">
+      <div class="opt-head">
+        <div class="opt-num">Option B</div>
+        <div class="opt-desc">Defined scope, defined term. Applicable for new venue relationships, festival-scale activations, or single-season engagements. Full operational presence within the contracted scope. Availability guaranteed within contracted windows; not guaranteed outside the contracted period.</div>
+      </div>
+      <div class="p-cols">
+        <div>
+          <div class="calc-box">
+            <label class="c-label">Weeks of engagement</label>
+            <input class="c-input" type="number" id="t2-weeks" min="1" max="22" step="1" placeholder="—" oninput="calcB()" style="text-align:center;">
+            <div class="r-row"><span class="rl">Weekly rate</span><span class="rv" id="b-rate">—</span></div>
+            <div class="r-row"><span class="rl">Engagement total</span><span class="rv gold" id="b-total">—</span></div>
+          </div>
+          <div class="note">Standard envelope: 8 weeks pre-production + event execution days + 3 weeks post-production. Engagements under 11 weeks billed at $6,280/week.</div>
+        </div>
+        <div>
+          <table class="rate-tbl">
+            <thead><tr><th>Duration</th><th>Rate</th></tr></thead>
+            <tbody>
+              <tr><td>Weeks 1–10 (short engagement)</td><td class="rv">$6,280/wk</td></tr>
+              <tr><td>Weeks 11–22 (standard)</td><td class="rv">$6,000/wk</td></tr>
+              <tr><td>Pre-production (standard)</td><td class="rv">8 weeks</td></tr>
+              <tr><td>Post-production (standard)</td><td class="rv">3 weeks</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPT C: PER SHOW -->
+    <div class="tab-panel" id="t3">
+      <div class="opt-head">
+        <div class="opt-num">Option C</div>
+        <div class="opt-desc">Discrete per-engagement contracts. Full availability provided leading up to and for two weeks following each engagement. No guarantee of availability outside the contracted period. Established clients carry a preferential rate.</div>
+      </div>
+      <div class="p-cols">
+        <div>
+          <div class="calc-box">
+            <label class="c-label">Number of shows</label>
+            <input class="c-input" type="number" id="t3-shows" min="1" max="30" placeholder="—" oninput="calcC()">
+            <div class="r-row"><span class="rl">Preferential rate</span><span class="rv gold">$18,000/show</span></div>
+            <div class="r-row"><span class="rl">Your total</span><span class="rv gold" id="c-zero">—</span></div>
+            <div class="r-div"></div>
+            <div class="r-row"><span class="rl">Standard list</span><span class="rv dim">$24,000/show</span></div>
+            <div class="r-row"><span class="rl">List total</span><span class="rv dim" id="c-list">—</span></div>
+            <div class="r-row"><span class="rl">Your savings</span><span class="rv credit" id="c-save">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENT TERMS — dynamic -->
+    <div class="cmp-section">
+      <div class="sec-head">Payment Terms</div>
+      <div id="pt-a" class="terms-grid" style="display:none;">
+        <div class="tc">
+          <div class="tl">At engagement</div>
+          <div class="tc-line"><span>Deposit</span><span class="tp">30%</span></div>
+          <div class="tc-line"><span>Monthly — first Friday</span><span class="tp">remainder</span></div>
+        </div>
+        <div class="tc">
+          <div class="tl">Annual prepay</div>
+          <div class="tc-line"><span>Single payment</span><span class="tp">full year</span></div>
+          <div class="tc-line"><span>Prior invoices, YTD</span><span class="tp">credited</span></div>
+        </div>
+      </div>
+      <div id="pt-b" style="display:none;margin-top:0.5rem;">
+        <div class="tc">
+          <div class="tc-line"><span>30% upfront</span></div>
+          <div class="tc-line"><span>Remainder paid weekly</span></div>
+          <div class="tc-line"><span>Delay in payment delays work · no pro-rating of missed days</span></div>
+        </div>
+      </div>
+      <div id="pt-c" style="display:block;margin-top:0.5rem;">
+        <div class="tc">
+          <div class="tc-line"><span>Deposit 1 · due at signing</span><span class="tp">50%</span></div>
+          <div class="tc-line"><span>Deposit 2 · due opening week</span><span class="tp">30%</span></div>
+          <div class="tc-line"><span>Balance due week following</span><span class="tp">20%</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /rc-main -->
+
+
+  <div class="doc-footer">
+    <img src="Just quill.gif?v=2" class="doc-footer-logo" alt="Sefirot">
+    <span>Sefirot Consulting LLC · office@sefirotconsulting.com · 917.533.3436</span>
+    <a href="https://www.sefirotconsulting.com">www.sefirotconsulting.com</a>
+  </div>
+
+</div><!-- /s-rates -->
 
 <script>
-(function() {
-  // Check if already signed — go straight to engage
-  window.openNDA = function(line) {
-    localStorage.setItem('sefirot_selected_line', line);
-    var signed = localStorage.getItem('sefirot_nda_signed');
-    if (signed === 'true') {
-      window.location.href = 'engage.html?line=' + line;
-    } else {
-      window.location.href = 'nda-sign.html?line=' + line;
-    }
-  };
-})();
-</script>
+// ── INIT ──────────────────────────────────────────────
+window.addEventListener('load', () => {
+  const pre = document.getElementById('s-pre');
+  requestAnimationFrame(() => requestAnimationFrame(() => pre.classList.add('shown')));
+});
 
+// ── NAVIGATION ────────────────────────────────────────
+function go(id) {
+  const targets = ['s-pre','s-nda','s-code','s-rates'];
+  targets.forEach(t => {
+    const el = document.getElementById(t);
+    if (!el) return;
+    if (t === id) {
+      el.style.display = (t === 's-nda' || t === 's-rates') ? 'flex' : 'flex';
+      el.classList.add('active');
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('shown')));
+    } else {
+      el.classList.remove('shown');
+      setTimeout(() => {
+        el.classList.remove('active');
+        if (t === 's-nda' || t === 's-rates') el.style.display = 'none';
+      }, 350);
+    }
+  });
+  if (id === 's-rates') {
+    setTimeout(() => {
+      const tabs = document.querySelector('.opt-tabs');
+      if (tabs) tabs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 380);
+  } else {
+    window.scrollTo(0, 0);
+  }
+}
+
+// ── NDA SUBMIT ────────────────────────────────────────
+function submitNDA(e) {
+  e.preventDefault();
+  const f   = document.getElementById('nda-form');
+  const fd  = new FormData(f);
+  const sig  = fd.get('signature');
+  const name = fd.get('name');
+  const err  = document.getElementById('nda-err');
+
+  if (!sig || !name) {
+    err.textContent = 'Please enter your name and signature.';
+    return;
+  }
+  err.textContent = '';
+  // Local file — NDA captured client-side only. No network call.
+  go('s-code');
+}
+
+// ── CLIENT CODE ────────────────────────────────────────
+const CLIENTS = {
+  'zero':    { year: 2022 },
+  'richard': { year: 2024 },
+  'jim':     { year: 2022 }
+};
+
+document.getElementById('c-year').addEventListener('keydown', e => { if (e.key === 'Enter') unlockRates(); });
+document.getElementById('c-name').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('c-year').focus(); });
+
+function unlockRates() {
+  const name = document.getElementById('c-name').value.trim().toLowerCase();
+  const year = parseInt(document.getElementById('c-year').value.trim());
+  const err  = document.getElementById('code-err');
+  if (!CLIENTS[name] || CLIENTS[name].year !== year) {
+    err.textContent = 'Code not recognized. Check name and year.';
+    return;
+  }
+  err.textContent = '';
+  go('s-rates');
+}
+
+// ── ENGAGEMENT FORM ───────────────────────────────────
+function showEngagementForm() {
+  const f = document.getElementById('eng-form');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+  // Sync select to active tab
+  const active = ['t1','t2','t3'].find(t => document.getElementById(t).classList.contains('active'));
+  const sel = document.getElementById('eng-option');
+  if (sel && active) sel.value = {t1:'A',t2:'B',t3:'C'}[active];
+}
+
+function submitEngagement() {
+  const name  = document.getElementById('ef-name').value.trim();
+  const email = document.getElementById('ef-email').value.trim();
+  const opt   = document.getElementById('eng-option').value;
+  const err   = document.getElementById('ef-err');
+  if (!name || !email) { err.textContent = 'Name and email required.'; return; }
+  err.textContent = '';
+
+  // Collect quantity from active calculator
+  let qty = '', sched = '';
+  if (opt === 'A') {
+    const aum = document.getElementById('t1-aum').value.replace(/[^\d]/g,'');
+    qty   = aum ? `P&L under management: ${parseInt(aum).toLocaleString('en-US')}` : 'P&L: not entered';
+    sched = 'Rate schedule: Option A bracket (13% / 8.7% / 1.3% / 0.89%)';
+  } else if (opt === 'B') {
+    const wks = document.getElementById('t2-weeks').value;
+    qty   = wks ? `Weeks of engagement: ${wks}` : 'Weeks: not entered';
+    sched = 'Rate schedule: Option B weekly ($6,280 wks 1–10 / $6,000 wks 11–22)';
+  } else {
+    const shows = document.getElementById('t3-shows').value;
+    qty   = shows ? `Number of shows: ${shows}` : 'Shows: not entered';
+    sched = 'Rate schedule: Option C preferential ($18,000/show)';
+  }
+
+  const optLabel = {'A':'Option A · Full Institutional','B':'Option B · Interim Mandate','C':'Option C · Per Show'}[opt];
+  const subject  = encodeURIComponent(`Sefirot Engagement — ${optLabel} — ${name}`);
+  const body     = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\nEngagement: ${optLabel}\n\n${qty}\n${sched}\n\nBy submitting, client agrees to engage Sefirot Consulting LLC under the above rate schedule as presented in the Client Portal.\n\n— Sefirot Client Portal`
+  );
+  window.location.href = `mailto:office@sefirotconsulting.com?subject=${subject}&body=${body}`;
+}
+
+// ── TAB SWITCHING ──────────────────────────────────────
+function switchTab(id) {
+  ['t1','t2','t3'].forEach((t, i) => {
+    document.getElementById(t).classList.toggle('active', t === id);
+    document.querySelectorAll('.tab-btn')[i].classList.toggle('active', t === id);
+  });
+  // Dynamic payment terms
+  const ptMap = { t1:'pt-a', t2:'pt-b', t3:'pt-c' };
+  const ptDisplay = { 'pt-a':'grid', 'pt-b':'block', 'pt-c':'block' };
+  ['pt-a','pt-b','pt-c'].forEach(p => {
+    document.getElementById(p).style.display = (ptMap[id] === p) ? ptDisplay[p] : 'none';
+  });
+  // Sync engagement form select
+  const sel = document.getElementById('eng-option');
+  if (sel) {
+    const optMap = { t1:'Option A · Full Institutional', t2:'Option B · Interim Mandate', t3:'Option C · Per Show' };
+    sel.value = optMap[id];
+  }
+}
+
+// ── FORMATTING ─────────────────────────────────────────
+function fmt(n) { return n == null ? '—' : '$' + Math.round(n).toLocaleString('en-US'); }
+function parseN(v) { const n = parseFloat(v.replace(/[\$,\s]/g,'')); return isNaN(n) ? null : n; }
+
+// ── AUM INPUT ──────────────────────────────────────────
+function onAumInput() {
+  const el = document.getElementById('t1-aum');
+  const raw = el.value.replace(/[^\d]/g,'');
+  if (!raw) { el.value = ''; calcA(); return; }
+  const n = parseInt(raw, 10);
+  const pos = el.selectionStart;
+  const prevLen = el.value.length;
+  el.value = n.toLocaleString('en-US');
+  // preserve caret roughly
+  const diff = el.value.length - prevLen;
+  try { el.setSelectionRange(Math.max(0, pos + diff), Math.max(0, pos + diff)); } catch(e) {}
+  calcA();
+}
+
+// ── AUM BAR COLOR ─────────────────────────────────────
+function aumBarColor(v) {
+  if (!v || v < 200000) return 'transparent';
+  const lerp = (a,b,t) => Math.round(a + (b-a)*Math.min(1,Math.max(0,t)));
+  const bg=[14,14,14], gold=[191,161,101], white=[232,226,217], green=[74,160,100];
+  let r,g,b;
+  if (v <= 10000000) {
+    const t = Math.log(v/200000) / Math.log(50);
+    r=lerp(bg[0],gold[0],t); g=lerp(bg[1],gold[1],t); b=lerp(bg[2],gold[2],t);
+  } else if (v <= 22000000) {
+    const t = (v-10000000)/12000000;
+    r=lerp(gold[0],white[0],t); g=lerp(gold[1],white[1],t); b=lerp(gold[2],white[2],t);
+  } else {
+    const t = (v-22000000)/18000000;
+    r=lerp(white[0],green[0],t); g=lerp(white[1],green[1],t); b=lerp(white[2],green[2],t);
+  }
+  return `rgb(${r},${g},${b})`;
+}
+
+function bracket(aum) {
+  if (!aum || aum <= 0) return { fee:0, t1:0, t2:0, t3:0 };
+  let t1=0, t2=0, t3=0;
+  if (aum <= 200000)       { t1 = aum * 0.10; }
+  else if (aum <= 2000000) { t1 = 20000; t2 = (aum-200000)*0.06; }
+  else                     { t1 = 20000; t2 = 108000; t3 = (aum-2000000)*0.037; }
+  return { fee: t1+t2+t3, t1, t2, t3 };
+}
+
+function calcA() {
+  const el = document.getElementById('t1-aum');
+  const raw = el.value.replace(/[^\d]/g,'');
+  const aum = raw ? parseInt(raw,10) : 0;
+  const bar = document.getElementById('aum-bar');
+  if (!aum) {
+    ['a-annual','a-monthly','a-deposit','a-prepay','a-saving','a-b1','a-b2','a-b3','a-b4'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent='—'; });
+    if(bar) bar.style.background='transparent';
+    return;
+  }
+  let b1=0,b2=0,b3=0,b4=0;
+  if      (aum <= 300000)   { b1 = aum * 0.13; }
+  else if (aum <= 2000000)  { b1 = 39000;       b2 = (aum-300000)*0.087; }
+  else if (aum <= 22000000) { b1 = 39000; b2 = 147900; b3 = (aum-2000000)*0.013; }
+  else                      { b1 = 39000; b2 = 147900; b3 = 260000; b4 = Math.min(aum-22000000,18000000)*0.0089; }
+  const YTD_CREDIT = 6280;
+  const fee    = b1+b2+b3+b4;
+  const prepay = Math.max(0, fee - YTD_CREDIT);
+  document.getElementById('a-annual').textContent  = fmt(fee);
+  document.getElementById('a-monthly').textContent = fmt(fee/12);
+  document.getElementById('a-deposit').textContent = fmt(fee*0.30);
+  document.getElementById('a-prepay').textContent  = fmt(prepay);
+  document.getElementById('a-saving').textContent  = '− $6,280';
+  document.getElementById('a-b1').textContent = fmt(b1);
+  const b2e=document.getElementById('a-b2'); if(b2e) b2e.textContent = b2 ? fmt(b2) : '—';
+  const b3e=document.getElementById('a-b3'); if(b3e) b3e.textContent = b3 ? fmt(b3) : '—';
+  const b4e=document.getElementById('a-b4'); if(b4e) b4e.textContent = b4 ? fmt(b4) : '—';
+  if(bar) bar.style.background = aumBarColor(aum);
+}
+
+function calcB() {
+  const el  = document.getElementById('t2-weeks');
+  const raw = el.value.replace(/[^\d]/g,'');
+  const wks = raw ? Math.min(22, Math.max(0, parseInt(raw,10))) : 0;
+  const rateEl = document.getElementById('b-rate');
+  if (!wks || wks < 1) {
+    ['b-rate','b-total'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent='—'; });
+    el.style.color = '';
+    return;
+  }
+  // Color feedback on input
+  if      (wks < 4)  { el.style.color = '#e05c5c'; }
+  else if (wks < 11) { el.style.color = '#d4914a'; }
+  else               { el.style.color = ''; }
+  // Tiered rate
+  const rate  = wks < 11 ? 6280 : 6000;
+  const total = wks * rate;
+  if(rateEl) rateEl.textContent = fmt(rate) + '/wk';
+  document.getElementById('b-total').textContent   = fmt(total);
+}
+
+function calcC() {
+  const n = parseFloat(document.getElementById('t3-shows').value);
+  if (!n || n < 1) { ['c-zero','c-list','c-save'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent='—'; }); return; }
+  const zero = n * 18000;
+  const list  = n * 24000;
+  document.getElementById('c-zero').textContent = fmt(zero);
+  document.getElementById('c-list').textContent = fmt(list);
+  document.getElementById('c-save').textContent = fmt(list - zero);
+}
+
+</script>
 </body>
 </html>
