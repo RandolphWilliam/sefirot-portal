@@ -9,12 +9,12 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #0a0a0a; --surface: #0f0f0f; --surface2: #131313;
-    --border: #272727; --border-faint: #181818;
-    --gold: #c8b89a; --gold-dim: #7a6a54;
-    --text: #e8e2d9; --text-dim: #888; --text-faint: #444;
-    --green: #5a9a6a; --red: #9a5a5a;
-    --navy: #1a2d6b; --crimson: #8b1c1c; --crimson-dim: rgba(139,28,28,0.28);
+    --bg: #f7f5f1; --surface: #ffffff; --surface2: #f0ece5;
+    --border: #d4cdc3; --border-faint: #e4dfd7;
+    --gold: #8b1c1c; --gold-dim: #5c1212;
+    --text: #1c1918; --text-dim: #504848; --text-faint: #9a9090;
+    --green: #2a6a3a; --red: #c0392b;
+    --navy: #1a2d6b; --crimson: #8b1c1c; --crimson-dim: rgba(139,28,28,0.12);
   }
 
   body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text); min-height: 100vh; }
@@ -33,11 +33,11 @@
   .pre-logo-mark {
     display: block; margin: 0 auto 2.5rem;
     max-width: 260px; width: 72%; height: auto;
-    filter: drop-shadow(0 0 16px rgba(255,255,255,0.12));
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.18));
   }
 
   /* ── NDA HEADER SIGIL ── */
-  .nda-sigil { height: 22px; width: auto; opacity: 0.7; margin-bottom: 0.6rem; display: block; }
+  .nda-sigil { height: 22px; width: auto; opacity: 0.8; margin-bottom: 0.6rem; display: block; mix-blend-mode: multiply; }
 
   /* ── SHARED ELEMENTS ── */
   .wm { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 2.5rem; }
@@ -141,36 +141,35 @@
   #s-rates {
     display: none; flex-direction: column; align-items: stretch; padding: 0;
     text-align: left; opacity: 0; transition: opacity 0.35s; min-height: 100vh;
-    border-top: 3px solid var(--crimson);
+    border-top: 3px solid var(--navy);
     box-shadow:
-      0 0 0 1px rgba(139,28,28,0.18),
-      inset 0 0 60px rgba(139,28,28,0.03),
-      0 -1px 0 rgba(26,45,107,0.5);
+      0 0 0 1px rgba(26,45,107,0.1),
+      inset 0 0 60px rgba(26,45,107,0.02);
     background:
-      linear-gradient(180deg, rgba(139,28,28,0.04) 0%, transparent 180px),
+      linear-gradient(180deg, rgba(26,45,107,0.04) 0%, transparent 160px),
       var(--bg);
   }
   #s-rates.active { display: flex; }
   #s-rates.shown   { opacity: 1; }
 
   .rc-header {
-    border-bottom: 1px solid rgba(139,28,28,0.35);
-    background: linear-gradient(180deg, rgba(139,28,28,0.07) 0%, rgba(139,28,28,0.02) 100%);
+    border-bottom: 1px solid rgba(26,45,107,0.15);
+    background: linear-gradient(180deg, rgba(26,45,107,0.05) 0%, rgba(26,45,107,0.01) 100%);
     padding: 0.75rem 1.5rem;
     display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
   }
   .rc-header .hl { display: flex; align-items: center; gap: 1.25rem; }
   .s-logo { width: 36px; height: 36px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-  .s-logo img { width: 36px; height: 36px; object-fit: contain; display: block; }
+  .s-logo img { width: 36px; height: 36px; object-fit: contain; display: block; mix-blend-mode: multiply; }
   .rc-title { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
   .rc-sub   { font-size: 0.7rem; color: var(--text-dim); }
   .rc-contact { text-align: right; font-size: 0.67rem; color: var(--text-faint); line-height: 1.7; }
   .rc-contact a { color: var(--text-faint); text-decoration: none; }
 
   .context-bar {
-    background: var(--surface);
-    border-bottom: 1px solid rgba(139,28,28,0.2);
-    border-left: 2px solid rgba(139,28,28,0.45);
+    background: var(--surface2);
+    border-bottom: 1px solid rgba(26,45,107,0.1);
+    border-left: 3px solid rgba(139,28,28,0.5);
     padding: 0.4rem 1rem;
   }
   .context-bar .yr-label { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
@@ -181,42 +180,40 @@
   .opt-tabs {
     display: flex; gap: 0.3rem; margin-bottom: 2rem;
     padding: 0.3rem;
-    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.38) 100%);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-bottom-color: rgba(0,0,0,0.6);
+    background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(240,236,229,0.85) 100%);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-bottom-color: rgba(0,0,0,0.14);
     border-radius: 8px;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.04);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05), 0 1px 0 rgba(255,255,255,0.95);
   }
   .tab-btn {
     flex: 1; padding: 0.65rem 0.5rem; font-family: inherit; font-size: 0.6rem;
     letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
     border-radius: 5px; text-align: center; white-space: nowrap;
     color: var(--text-faint);
-    background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-bottom-color: rgba(0,0,0,0.4);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4);
+    background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(240,236,229,0.5) 100%);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-bottom-color: rgba(0,0,0,0.11);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 2px rgba(0,0,0,0.04);
     transition: all 0.2s ease;
   }
   .tab-btn:hover {
     color: var(--text-dim);
-    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
-    border-color: rgba(255,255,255,0.12);
-    border-bottom-color: rgba(0,0,0,0.4);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.09), 0 1px 4px rgba(0,0,0,0.5);
+    background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(245,241,235,0.9) 100%);
+    border-color: rgba(0,0,0,0.11);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 1px 4px rgba(0,0,0,0.06);
   }
   .tab-btn.active {
-    color: var(--gold);
-    background: linear-gradient(180deg, rgba(191,161,101,0.22) 0%, rgba(191,161,101,0.08) 100%);
-    border-color: rgba(191,161,101,0.35);
-    border-top-color: rgba(191,161,101,0.5);
-    border-bottom-color: rgba(100,80,40,0.5);
+    color: var(--crimson);
+    background: linear-gradient(180deg, rgba(139,28,28,0.07) 0%, rgba(139,28,28,0.03) 100%);
+    border-color: rgba(139,28,28,0.18);
+    border-top-color: rgba(139,28,28,0.32);
+    border-bottom-color: rgba(139,28,28,0.2);
     box-shadow:
-      inset 0 1px 0 rgba(255,220,140,0.18),
-      inset 0 -1px 0 rgba(0,0,0,0.3),
-      0 0 10px rgba(191,161,101,0.18),
-      0 2px 6px rgba(0,0,0,0.45);
-    text-shadow: 0 0 12px rgba(191,161,101,0.5);
+      inset 0 1px 0 rgba(255,255,255,0.8),
+      0 0 8px rgba(139,28,28,0.07),
+      0 2px 5px rgba(0,0,0,0.05);
+    text-shadow: none;
   }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
@@ -240,7 +237,7 @@
   .c-input::placeholder { color: var(--text-faint); font-size: 0.85rem; }
   @keyframes inputPulse {
     0%,100% { border-color: var(--border); box-shadow: none; }
-    50%      { border-color: rgba(191,161,101,0.45); box-shadow: 0 0 8px rgba(191,161,101,0.14), inset 0 0 0 1px rgba(191,161,101,0.08); }
+    50%      { border-color: rgba(139,28,28,0.38); box-shadow: 0 0 6px rgba(139,28,28,0.08), inset 0 0 0 1px rgba(139,28,28,0.05); }
   }
   .c-input:not(:focus):placeholder-shown { animation: inputPulse 2.4s ease-in-out infinite; }
 
@@ -267,7 +264,11 @@
   .bk-row .bt { color: var(--gold); font-family: 'Courier New', monospace; }
   .bk-row .bc { color: var(--text-faint); font-size: 0.7rem; font-family: 'Courier New', monospace; }
 
-  .note { background: #0f0f0f; border: 1px solid var(--border-faint); border-left: 2px solid var(--gold-dim); padding: 0.5rem 0.75rem; font-size: 0.72rem; color: var(--text-dim); line-height: 1.45; margin-top: 0.6rem; }
+  .note { background: #fdf9f5; border: 1px solid var(--border-faint); border-left: 2px solid var(--crimson); padding: 0.5rem 0.75rem; font-size: 0.72rem; color: var(--text-dim); line-height: 1.45; margin-top: 0.6rem; }
+
+  /* ── CODE GATE ── */
+  #s-code { position: relative; }
+  .code-quill { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); height: 30px; width: auto; mix-blend-mode: multiply; opacity: 0.45; }
 
   .cmp-section { margin-top: 0.9rem; }
   .sec-head { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.5rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border-faint); }
@@ -288,13 +289,13 @@
   .aum-bar { height: 4px; width: 100%; margin-top: -1rem; margin-bottom: 0.9rem; transition: background 0.4s ease; background: transparent; border-radius: 0 0 2px 2px; }
 
   .doc-footer {
-    border-top: 1px solid rgba(139,28,28,0.3);
-    background: linear-gradient(0deg, rgba(139,28,28,0.05) 0%, transparent 100%);
+    border-top: 1px solid rgba(26,45,107,0.12);
+    background: linear-gradient(0deg, rgba(26,45,107,0.03) 0%, transparent 100%);
     padding: 1rem 2rem;
     display: flex; justify-content: space-between; align-items: center;
     font-size: 0.65rem; color: var(--text-faint); gap: 1rem; flex-wrap: wrap;
   }
-  .doc-footer-logo { height: 22px; width: auto; opacity: 0.55; }
+  .doc-footer-logo { height: 22px; width: auto; opacity: 0.65; mix-blend-mode: multiply; }
   .doc-footer a { color: var(--text-faint); text-decoration: none; }
   .doc-footer .conf { font-style: italic; }
 
@@ -405,15 +406,13 @@
 
 <!-- ══ SECTION 3: CLIENT CODE ══════════════════════════ -->
 <div class="section" id="s-code">
-  <div class="wm">Sefirot Consulting LLC</div>
-  <h1 class="sh1">Your rate card is ready.</h1>
-  <p class="sp">Enter your name and the year you first worked with Sefirot.</p>
+  <p class="sp">Input your client ID</p>
   <div class="field-pair">
-    <input type="text" id="c-name" placeholder="Your name" autocomplete="off">
-    <input type="text" id="c-year" class="yr" placeholder="Year" maxlength="4" autocomplete="off">
+    <input type="text" id="c-name" placeholder="Client ID" autocomplete="off" style="letter-spacing:0.08em;text-transform:uppercase;">
   </div>
   <button class="full-btn" onclick="unlockRates()">View Rate Card →</button>
   <div class="err-line" id="code-err"></div>
+  <img src="Just quill.gif?v=2" class="code-quill" alt="">
 </div>
 
 <!-- ══ SECTION 4: RATE CARD ═══════════════════════════ -->
@@ -451,7 +450,7 @@
         <div>
           <div class="calc-box">
             <label class="c-label">Annual P&amp;L under management</label>
-            <input class="c-input" type="text" id="t1-aum" inputmode="numeric" placeholder="—" oninput="onAumInput()" style="text-align:center;">
+            <input class="c-input" type="text" id="t1-aum" inputmode="numeric" placeholder="fill in to calculate" oninput="onAumInput()" style="text-align:center;">
             <div class="aum-bar" id="aum-bar"></div>
             <div class="r-row"><span class="rl">Annual fee</span><span class="rv gold" id="a-annual">—</span></div>
             <div class="r-div"></div>
@@ -471,7 +470,7 @@
             <div class="bk-row"><span class="br">First $300,000</span><span class="bt">13%</span><span class="bc" id="a-b1">—</span></div>
             <div class="bk-row"><span class="br">$300k – $2,000,000</span><span class="bt">8.7%</span><span class="bc" id="a-b2">—</span></div>
             <div class="bk-row"><span class="br">$2M – $22,000,000 <span style="font-size:0.62rem;opacity:0.55">SBA no-venue ≈$20M</span></span><span class="bt">1.3%</span><span class="bc" id="a-b3">—</span></div>
-            <div class="bk-row" style="border-top:1px solid rgba(191,161,101,0.2);padding-top:0.4rem;margin-top:0.1rem;"><span class="br" style="font-size:0.7rem;color:var(--text-faint)">$22M – $40M <span style="font-size:0.62rem;opacity:0.6">SBA with facility(s)</span></span><span class="bt" style="color:var(--text-dim)">0.89%</span><span class="bc" id="a-b4">—</span></div>
+            <div class="bk-row" style="border-top:1px solid rgba(139,28,28,0.15);padding-top:0.4rem;margin-top:0.1rem;"><span class="br" style="font-size:0.7rem;color:var(--text-faint)">$22M – $40M <span style="font-size:0.62rem;opacity:0.6">SBA with facility(s)</span></span><span class="bt" style="color:var(--text-dim)">0.89%</span><span class="bc" id="a-b4">—</span></div>
           </div>
           <div class="note" style="margin-top:1.25rem;">At scale toward $2M, effective rate compresses to ~9.3%. The 1.3% tier above $2M drives blended rates below 5% for larger operations — below 3% above $10M. Makes adding engagements seamless with no per-engagement renegotiation.</div>
         </div>
@@ -488,7 +487,7 @@
         <div>
           <div class="calc-box">
             <label class="c-label">Weeks of engagement</label>
-            <input class="c-input" type="number" id="t2-weeks" min="1" max="22" step="1" placeholder="—" oninput="calcB()" style="text-align:center;">
+            <input class="c-input" type="number" id="t2-weeks" min="1" max="22" step="1" placeholder="fill in to calculate" oninput="calcB()" style="text-align:center;">
             <div class="r-row"><span class="rl">Weekly rate</span><span class="rv" id="b-rate">—</span></div>
             <div class="r-row"><span class="rl">Engagement total</span><span class="rv gold" id="b-total">—</span></div>
           </div>
@@ -518,7 +517,7 @@
         <div>
           <div class="calc-box">
             <label class="c-label">Number of shows</label>
-            <input class="c-input" type="number" id="t3-shows" min="1" max="30" placeholder="—" oninput="calcC()">
+            <input class="c-input" type="number" id="t3-shows" min="1" max="30" placeholder="fill in to calculate" oninput="calcC()" style="text-align:center;">
             <div class="r-row"><span class="rl">Preferential rate</span><span class="rv gold">$18,000/show</span></div>
             <div class="r-row"><span class="rl">Your total</span><span class="rv gold" id="c-zero">—</span></div>
             <div class="r-div"></div>
@@ -626,21 +625,19 @@ function submitNDA(e) {
 }
 
 // ── CLIENT CODE ────────────────────────────────────────
-const CLIENTS = {
-  'zero':    { year: 2022 },
-  'richard': { year: 2024 },
-  'jim':     { year: 2022 }
+const CLIENT_IDS = {
+  'ZERO-22':     true,
+  'RICHARD-24':  true,
+  'JIM-22':      true,
 };
 
-document.getElementById('c-year').addEventListener('keydown', e => { if (e.key === 'Enter') unlockRates(); });
-document.getElementById('c-name').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('c-year').focus(); });
+document.getElementById('c-name').addEventListener('keydown', e => { if (e.key === 'Enter') unlockRates(); });
 
 function unlockRates() {
-  const name = document.getElementById('c-name').value.trim().toLowerCase();
-  const year = parseInt(document.getElementById('c-year').value.trim());
-  const err  = document.getElementById('code-err');
-  if (!CLIENTS[name] || CLIENTS[name].year !== year) {
-    err.textContent = 'Code not recognized. Check name and year.';
+  const id  = document.getElementById('c-name').value.trim().toUpperCase().replace(/\s+/g,'');
+  const err = document.getElementById('code-err');
+  if (!CLIENT_IDS[id]) {
+    err.textContent = 'Client ID not recognized.';
     return;
   }
   err.textContent = '';
@@ -732,7 +729,7 @@ function onAumInput() {
 function aumBarColor(v) {
   if (!v || v < 200000) return 'transparent';
   const lerp = (a,b,t) => Math.round(a + (b-a)*Math.min(1,Math.max(0,t)));
-  const bg=[14,14,14], gold=[191,161,101], white=[232,226,217], green=[74,160,100];
+  const bg=[247,245,241], gold=[139,28,28], white=[26,45,107], green=[42,106,58];
   let r,g,b;
   if (v <= 10000000) {
     const t = Math.log(v/200000) / Math.log(50);
