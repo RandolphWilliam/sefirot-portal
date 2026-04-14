@@ -237,7 +237,7 @@
   .c-input::placeholder { color: var(--text-faint); font-size: 0.85rem; }
   @keyframes inputPulse {
     0%,100% { border-color: var(--border); box-shadow: none; }
-    50%      { border-color: rgba(139,28,28,0.38); box-shadow: 0 0 6px rgba(139,28,28,0.08), inset 0 0 0 1px rgba(139,28,28,0.05); }
+    50%      { border-color: rgba(180,140,60,0.45); box-shadow: 0 0 6px rgba(180,140,60,0.12), inset 0 0 0 1px rgba(180,140,60,0.08); }
   }
   .c-input:not(:focus):placeholder-shown { animation: inputPulse 2.4s ease-in-out infinite; }
 
@@ -305,6 +305,98 @@
     .context-bar { padding: 0.9rem 1.25rem; }
     .doc-footer { padding: 0.9rem 1.25rem; }
   }
+
+  /* ── PORTAL NAV BUTTONS ── */
+  .portal-btns { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; max-width: 380px; }
+  .portal-btn {
+    width: 100%; padding: 1rem 1.5rem;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); font-size: 0.78rem; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer; font-family: inherit;
+    transition: all 0.2s; text-align: left;
+  }
+  .portal-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── YTD / AR PAGE ── */
+  #s-ytd, #s-docs {
+    display: none; flex-direction: column; align-items: stretch; padding: 0;
+    text-align: left; opacity: 0; transition: opacity 0.35s; min-height: 100vh;
+    border-top: 3px solid var(--navy);
+    background: linear-gradient(180deg, rgba(26,45,107,0.04) 0%, transparent 160px), var(--bg);
+  }
+  #s-ytd.active, #s-docs.active { display: flex; }
+  #s-ytd.shown, #s-docs.shown { opacity: 1; }
+
+  .ledger-section { margin-bottom: 2rem; }
+  .ledger-tbl { width: 100%; border: 1px solid var(--border); border-collapse: collapse; }
+  .ledger-tbl th {
+    padding: 0.7rem 0.9rem; font-size: 0.58rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-faint); text-align: left;
+    background: var(--surface2); border-bottom: 1px solid var(--border); font-weight: normal;
+  }
+  .ledger-tbl td {
+    padding: 0.75rem 0.9rem; font-size: 0.78rem; color: var(--text-dim);
+    border-bottom: 1px solid var(--border-faint); vertical-align: top;
+  }
+  .ledger-tbl td.mono { font-family: 'Courier New', monospace; }
+  .ledger-tbl td.amt { font-family: 'Courier New', monospace; color: var(--gold); text-align: right; }
+  .ledger-tbl td.overdue { color: var(--red); }
+  .ledger-tbl tr:last-child td { border-bottom: none; }
+  .past-due { display: block; font-size: 0.65rem; color: var(--red); margin-top: 0.25rem; }
+
+  .ledger-total {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.9rem; background: var(--surface); border: 1px solid var(--border);
+    border-top: none; font-size: 0.8rem;
+  }
+  .lt-label { color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.65rem; }
+  .lt-value { font-family: 'Courier New', monospace; color: var(--gold); font-size: 1rem; }
+
+  .ar-contact {
+    background: var(--surface); border: 1px solid var(--border); padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .ar-title { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.6rem; }
+  .ar-line { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.35rem; }
+  .ar-line a { color: var(--gold); text-decoration: none; }
+  .ar-line a:hover { text-decoration: underline; }
+
+  .back-btn {
+    display: inline-block; padding: 0.7rem 1.5rem;
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer; font-family: inherit;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── DOCUMENTS PAGE ── */
+  .doc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+  @media (max-width: 500px) { .doc-grid { grid-template-columns: 1fr; } }
+  .doc-btn {
+    display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); text-decoration: none; transition: all 0.2s;
+  }
+  .doc-btn:hover { border-color: var(--gold); }
+  .doc-btn:hover .doc-label { color: var(--gold); }
+  .doc-icon { font-size: 1.5rem; opacity: 0.7; }
+  .doc-label { font-size: 0.78rem; color: var(--text-dim); line-height: 1.4; }
+
+  /* ── STRIKETHROUGH RATES ── */
+  .rate-strike { text-decoration: line-through; color: var(--text-faint); opacity: 0.7; margin-right: 0.5rem; }
+  .rate-prestige { color: var(--gold); }
+
+  /* ── COMPRESSED WARNING BOX ── */
+  .compressed-warning {
+    display: none; background: #fdf5f5; border: 1px solid rgba(192,57,43,0.25);
+    border-left: 3px solid var(--red); padding: 1rem 1.25rem; margin-top: 1rem;
+  }
+  .compressed-warning.visible { display: block; }
+  .cw-title { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); margin-bottom: 0.6rem; }
+  .cw-rate { font-size: 1.1rem; color: var(--gold); font-family: 'Courier New', monospace; margin-bottom: 0.5rem; }
+  .cw-list { font-size: 0.75rem; color: var(--text-dim); line-height: 1.7; padding-left: 1rem; margin: 0; }
+  .cw-list li { margin-bottom: 0.25rem; }
 
   @media print {
     @page { margin: 0.85in 0.9in; size: letter portrait; }
@@ -406,13 +498,115 @@
 
 <!-- ══ SECTION 3: CLIENT CODE ══════════════════════════ -->
 <div class="section" id="s-code">
-  <p class="sp">Input your client ID</p>
-  <div class="field-pair">
-    <input type="text" id="c-name" placeholder="Client ID" autocomplete="off" style="letter-spacing:0.08em;text-transform:uppercase;">
+  <div id="code-entry">
+    <p class="sp">Input your client ID</p>
+    <div class="field-pair">
+      <input type="text" id="c-name" placeholder="Client ID" autocomplete="off" style="letter-spacing:0.08em;text-transform:uppercase;">
+    </div>
+    <button class="full-btn" onclick="unlockClient()">Continue →</button>
+    <div class="err-line" id="code-err"></div>
   </div>
-  <button class="full-btn" onclick="unlockRates()">View Rate Card →</button>
-  <div class="err-line" id="code-err"></div>
+  <div id="portal-nav" style="display:none;">
+    <p class="sp" style="margin-bottom:1.5rem;">Client Portal</p>
+    <div class="portal-btns">
+      <button class="portal-btn" onclick="go('s-rates')">Rate Card</button>
+      <button class="portal-btn" onclick="go('s-ytd')">Year to Date Invoices</button>
+      <button class="portal-btn" onclick="go('s-docs')">Documents</button>
+    </div>
+  </div>
   <img src="Just quill.gif?v=2" class="code-quill" alt="">
+</div>
+
+<!-- ══ SECTION 3B: YEAR TO DATE INVOICES ════════════════ -->
+<div id="s-ytd">
+  <div class="rc-header">
+    <div class="hl">
+      <div class="s-logo"><img src="Just quill.gif?v=2" alt="Sefirot"></div>
+      <div>
+        <div class="rc-title">Year to Date Invoices</div>
+        <div class="rc-sub" id="ytd-client-sub">Client Account</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rc-main" style="padding-top:1.5rem;">
+    <div class="ledger-section">
+      <table class="ledger-tbl">
+        <thead>
+          <tr>
+            <th>Engagement</th>
+            <th>Invoice #</th>
+            <th>Invoice Date</th>
+            <th>Due Date</th>
+            <th>Outstanding</th>
+          </tr>
+        </thead>
+        <tbody id="ytd-ledger">
+          <!-- Populated by JS based on client -->
+        </tbody>
+      </table>
+      <div class="ledger-total">
+        <span class="lt-label">Total Outstanding</span>
+        <span class="lt-value" id="ytd-total">—</span>
+      </div>
+    </div>
+
+    <div class="ar-contact">
+      <div class="ar-title">Accounts Receivable</div>
+      <div class="ar-line">Email: <a href="mailto:office@sefirotconsulting.com">office@sefirotconsulting.com</a></div>
+      <div class="ar-line">A/R Clerk: <a href="tel:+13143683682">(314) 368-3682</a></div>
+    </div>
+
+    <button class="back-btn" onclick="go('s-code')">← Back to Portal</button>
+  </div>
+
+  <div class="doc-footer">
+    <img src="Just quill.gif?v=2" class="doc-footer-logo" alt="Sefirot">
+    <span>Sefirot Consulting LLC · office@sefirotconsulting.com · 917.533.3436</span>
+    <a href="https://www.sefirotconsulting.com">www.sefirotconsulting.com</a>
+  </div>
+</div>
+
+<!-- ══ SECTION 3C: DOCUMENTS ════════════════════════════ -->
+<div id="s-docs">
+  <div class="rc-header">
+    <div class="hl">
+      <div class="s-logo"><img src="Just quill.gif?v=2" alt="Sefirot"></div>
+      <div>
+        <div class="rc-title">Documents</div>
+        <div class="rc-sub">Client Resources</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rc-main" style="padding-top:1.5rem;">
+    <div class="doc-grid">
+      <a href="#" class="doc-btn" onclick="alert('Document link pending'); return false;">
+        <span class="doc-icon">📊</span>
+        <span class="doc-label">Ticket Modeling — Industry City</span>
+      </a>
+      <a href="#" class="doc-btn" onclick="alert('Document link pending'); return false;">
+        <span class="doc-icon">📈</span>
+        <span class="doc-label">Budget Calculator Model</span>
+      </a>
+      <a href="#" class="doc-btn" onclick="alert('Document link pending'); return false;">
+        <span class="doc-icon">📅</span>
+        <span class="doc-label">Adam Ten Chronology</span>
+      </a>
+      <a href="#" class="doc-btn" onclick="alert('Document link pending'); return false;">
+        <span class="doc-icon">🗺️</span>
+        <span class="doc-label">Security Dot Map</span>
+      </a>
+    </div>
+
+    <button class="back-btn" onclick="go('s-code')">← Back to Portal</button>
+  </div>
+
+  <div class="doc-footer">
+    <img src="Just quill.gif?v=2" class="doc-footer-logo" alt="Sefirot">
+    <span>Sefirot Consulting LLC · office@sefirotconsulting.com · 917.533.3436</span>
+    <a href="https://www.sefirotconsulting.com">www.sefirotconsulting.com</a>
+  </div>
 </div>
 
 <!-- ══ SECTION 4: RATE CARD ═══════════════════════════ -->
@@ -452,7 +646,7 @@
             <label class="c-label">Annual P&amp;L under management</label>
             <input class="c-input" type="text" id="t1-aum" inputmode="numeric" placeholder="fill in to calculate" oninput="onAumInput()" style="text-align:center;">
             <div class="aum-bar" id="aum-bar"></div>
-            <div class="r-row"><span class="rl">Annual fee</span><span class="rv gold" id="a-annual">—</span></div>
+            <div class="r-row"><span class="rl">Total Fee <span style="font-size:0.6rem;color:var(--text-faint);text-transform:none;letter-spacing:0;">(incremental model)</span></span><span class="rv gold" id="a-annual">—</span></div>
             <div class="r-div"></div>
             <div class="r-row"><span class="rl" style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint)">Monthly installments</span></div>
             <div class="r-row"><span class="rl">Deposit at engagement (30%)</span><span class="rv" id="a-deposit">—</span></div>
@@ -460,19 +654,20 @@
             <div class="r-div"></div>
             <div class="r-row"><span class="rl" style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">Annual prepay · prior invoices credited</span></div>
             <div class="r-row"><span class="rl">Single payment</span><span class="rv gold" id="a-prepay">—</span></div>
-            <div class="r-row"><span class="rl">Invoices paid to date, applied as credit</span><span class="rv credit" id="a-saving">− $6,280</span></div>
+            <div class="r-row"><span class="rl">YTD invoices paid, applied as credit</span><span class="rv credit" id="a-saving">—</span></div>
           </div>
-          <div class="note">Previous engagements this calendar year are credited in full against the annualized commitment — your history with Sefirot commonly counts in lieu of deposit. Renews until written cancellation.</div>
+          <div class="note">Previous engagements this calendar year may be credited against the annualized commitment — your history with Sefirot commonly counts in lieu of deposit. Credit applied based on paid invoices. Renews until written cancellation.</div>
         </div>
         <div>
           <div class="bk-strip">
-            <div class="bk-label">P&amp;L bracket</div>
-            <div class="bk-row"><span class="br">First $300,000</span><span class="bt">13%</span><span class="bc" id="a-b1">—</span></div>
-            <div class="bk-row"><span class="br">$300k – $2,000,000</span><span class="bt">8.7%</span><span class="bc" id="a-b2">—</span></div>
-            <div class="bk-row"><span class="br">$2M – $22,000,000 <span style="font-size:0.62rem;opacity:0.55">SBA no-venue ≈$20M</span></span><span class="bt">1.3%</span><span class="bc" id="a-b3">—</span></div>
-            <div class="bk-row" style="border-top:1px solid rgba(139,28,28,0.15);padding-top:0.4rem;margin-top:0.1rem;"><span class="br" style="font-size:0.7rem;color:var(--text-faint)">$22M – $40M <span style="font-size:0.62rem;opacity:0.6">SBA with facility(s)</span></span><span class="bt" style="color:var(--text-dim)">0.89%</span><span class="bc" id="a-b4">—</span></div>
+            <div class="bk-label">P&amp;L Bracket — Incremental Fee Model</div>
+            <div class="bk-row"><span class="br">First $300,000</span><span class="bt"><span class="rate-strike">24%</span> 13%</span><span class="bc" id="a-b1">—</span></div>
+            <div class="bk-row"><span class="br">$300k – $2,000,000</span><span class="bt"><span class="rate-strike">15%</span> 8.7%</span><span class="bc" id="a-b2">—</span></div>
+            <div class="bk-row"><span class="br">$2M – $22,000,000 <span style="font-size:0.62rem;opacity:0.55">SBA no-venue ≈$20M</span></span><span class="bt"><span class="rate-strike">3%</span> 1.3%</span><span class="bc" id="a-b3">—</span></div>
+            <div class="bk-row" style="border-top:1px solid rgba(139,28,28,0.15);padding-top:0.4rem;margin-top:0.1rem;"><span class="br" style="font-size:0.7rem;color:var(--text-faint)">$22M – $40M <span style="font-size:0.62rem;opacity:0.6">SBA with facility(s)</span></span><span class="bt" style="color:var(--text-dim)"><span class="rate-strike">1%</span> 0.89%</span><span class="bc" id="a-b4">—</span></div>
           </div>
-          <div class="note" style="margin-top:1.25rem;">At scale toward $2M, effective rate compresses to ~9.3%. The 1.3% tier above $2M drives blended rates below 5% for larger operations — below 3% above $10M. Makes adding engagements seamless with no per-engagement renegotiation.</div>
+          <div class="note" style="margin-top:0.75rem;font-size:0.7rem;color:var(--text-dim);">Total Fee = Σ (tier rate × revenue within that tier). Fees are incremental across tiers — total fee is sum of all applicable tiers, not a single percentage against entire P&amp;L.</div>
+          <div class="note" style="margin-top:0.5rem;">At scale toward $2M, effective rate compresses to ~9.3%. The 1.3% tier above $2M drives blended rates below 5% for larger operations — below 3% above $10M. Makes adding engagements seamless with no per-engagement renegotiation.</div>
         </div>
       </div>
     </div>
@@ -481,7 +676,7 @@
     <div class="tab-panel" id="t2">
       <div class="opt-head">
         <div class="opt-num">Option B</div>
-        <div class="opt-desc">Defined scope, defined term. Applicable for new venue relationships, festival-scale activations, or single-season engagements. Full operational presence within the contracted scope. Availability guaranteed within contracted windows; not guaranteed outside the contracted period.</div>
+        <div class="opt-desc">Defined scope, defined term. Standard engagement structure: 12 weeks total — 8 weeks pre-production, production and event execution, 3 weeks post-production. 12-week engagements cover concerts and openings; 22-week engagements cover festival-scale events. Total fees are based on scope and accountability — accelerated timelines do not reduce responsibility, only increase intensity, resourcing, and execution risk.</div>
       </div>
       <div class="p-cols">
         <div>
@@ -491,16 +686,32 @@
             <div class="r-row"><span class="rl">Weekly rate</span><span class="rv" id="b-rate">—</span></div>
             <div class="r-row"><span class="rl">Engagement total</span><span class="rv gold" id="b-total">—</span></div>
           </div>
-          <div class="note">Standard envelope: 8 weeks pre-production + event execution days + 3 weeks post-production. Engagements under 11 weeks billed at $6,280/week.</div>
+          <div class="compressed-warning" id="compressed-warn">
+            <div class="cw-title">Compressed Delivery Model</div>
+            <div class="cw-rate">$10,990/week · $45,000 minimum</div>
+            <ul class="cw-list">
+              <li>Engagements under 4 weeks require schedule displacement to support immediate mobilization and execution continuity</li>
+              <li>Immediate or next available priority</li>
+              <li>24/7 availability until show</li>
+              <li>Confirmation secured upon deposit</li>
+            </ul>
+          </div>
+          <div class="note">Engagements under the standard 12-week cycle are priced on a compressed delivery model reflecting increased resource intensity and accelerated framework.</div>
         </div>
         <div>
           <table class="rate-tbl">
-            <thead><tr><th>Duration</th><th>Rate</th></tr></thead>
+            <thead><tr><th>Duration</th><th>List</th><th>Prestige Rate</th></tr></thead>
             <tbody>
-              <tr><td>Weeks 1–10 (short engagement)</td><td class="rv">$6,280/wk</td></tr>
-              <tr><td>Weeks 11–22 (standard)</td><td class="rv">$6,000/wk</td></tr>
-              <tr><td>Pre-production (standard)</td><td class="rv">8 weeks</td></tr>
-              <tr><td>Post-production (standard)</td><td class="rv">3 weeks</td></tr>
+              <tr><td>Weeks 1–11 (compressed)</td><td class="rv"><span class="rate-strike">$8,280/wk</span></td><td class="rv rate-prestige">$6,280/wk</td></tr>
+              <tr><td>Weeks 12–22 (standard)</td><td class="rv"><span class="rate-strike">$6,280/wk</span></td><td class="rv rate-prestige">$6,000/wk</td></tr>
+            </tbody>
+          </table>
+          <table class="rate-tbl" style="margin-top:0.75rem;">
+            <thead><tr><th colspan="2">Standard Engagement Structure</th></tr></thead>
+            <tbody>
+              <tr><td>Pre-production</td><td class="rv">8 weeks</td></tr>
+              <tr><td>Production &amp; event execution</td><td class="rv">variable</td></tr>
+              <tr><td>Post-production</td><td class="rv">3 weeks</td></tr>
             </tbody>
           </table>
         </div>
@@ -511,7 +722,7 @@
     <div class="tab-panel" id="t3">
       <div class="opt-head">
         <div class="opt-num">Option C</div>
-        <div class="opt-desc">Discrete per-engagement contracts. Full availability provided leading up to and for two weeks following each engagement. No guarantee of availability outside the contracted period. Established clients carry a preferential rate.</div>
+        <div class="opt-desc">Discrete per-engagement contracts. Availability for the duration of pre-production, production, and continued coverage up to two weeks following show date. No guarantee of availability outside the contracted period. Established clients carry a preferential rate.</div>
       </div>
       <div class="p-cols">
         <div>
@@ -548,8 +759,8 @@
         <div class="tc">
           <div class="tc-line"><span>30% upfront</span></div>
           <div class="tc-line"><span>Remainder paid weekly</span></div>
-          <div class="tc-line"><span>Delay in payment delays work · no pro-rating of missed days</span></div>
         </div>
+        <div class="note" style="margin-top:0.5rem;font-size:0.68rem;line-height:1.6;">Sefirot does not assume liability for delays, missed deadlines, losses, or reputational impact resulting from such delays. Fees remain non-refundable and non-prorated. Work will not resume until all outstanding balances are cleared with proof of payment. Late or missed payments will result in immediate suspension of services.</div>
       </div>
       <div id="pt-c" style="display:block;margin-top:0.5rem;">
         <div class="tc">
@@ -557,6 +768,7 @@
           <div class="tc-line"><span>Deposit 2 · due opening week</span><span class="tp">30%</span></div>
           <div class="tc-line"><span>Balance due week following</span><span class="tp">20%</span></div>
         </div>
+        <div class="note" style="margin-top:0.5rem;font-size:0.68rem;line-height:1.6;">Sefirot does not assume liability for delays, missed deadlines, losses, or reputational impact resulting from such delays. Fees remain non-refundable and non-prorated. Work will not resume until all outstanding balances are cleared with proof of payment. Late or missed payments will result in immediate suspension of services.</div>
       </div>
     </div>
 
@@ -580,19 +792,20 @@ window.addEventListener('load', () => {
 
 // ── NAVIGATION ────────────────────────────────────────
 function go(id) {
-  const targets = ['s-pre','s-nda','s-code','s-rates'];
+  const targets = ['s-pre','s-nda','s-code','s-rates','s-ytd','s-docs'];
+  const flexSections = ['s-nda','s-rates','s-ytd','s-docs'];
   targets.forEach(t => {
     const el = document.getElementById(t);
     if (!el) return;
     if (t === id) {
-      el.style.display = (t === 's-nda' || t === 's-rates') ? 'flex' : 'flex';
+      el.style.display = 'flex';
       el.classList.add('active');
       requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('shown')));
     } else {
       el.classList.remove('shown');
       setTimeout(() => {
         el.classList.remove('active');
-        if (t === 's-nda' || t === 's-rates') el.style.display = 'none';
+        if (flexSections.includes(t)) el.style.display = 'none';
       }, 350);
     }
   });
@@ -601,6 +814,13 @@ function go(id) {
       const tabs = document.querySelector('.opt-tabs');
       if (tabs) tabs.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 380);
+  } else if (id === 's-code') {
+    // Show portal nav if client already validated
+    if (window.currentClientId) {
+      document.getElementById('code-entry').style.display = 'none';
+      document.getElementById('portal-nav').style.display = 'block';
+    }
+    window.scrollTo(0, 0);
   } else {
     window.scrollTo(0, 0);
   }
@@ -624,24 +844,82 @@ function submitNDA(e) {
   go('s-code');
 }
 
-// ── CLIENT CODE ────────────────────────────────────────
-const CLIENT_IDS = {
-  'ZERO-22':     true,
-  'RICHARD-24':  true,
-  'JIM-22':      true,
+// ── CLIENT CODE & DATA ─────────────────────────────────
+const CLIENT_DATA = {
+  'ZERO-22': {
+    name: 'Zero',
+    invoices: [
+      { engagement: 'Adam Ten Industry City', invoiceNum: 'EP-26_003', invoiceDate: '2026-03-24', dueDate: '2026-03-27', amount: 3140 }
+    ]
+  },
+  'RICHARD-24': { name: 'Richard', invoices: [] },
+  'JIM-22': { name: 'Jim', invoices: [] },
 };
 
-document.getElementById('c-name').addEventListener('keydown', e => { if (e.key === 'Enter') unlockRates(); });
+window.currentClientId = null;
 
-function unlockRates() {
+document.getElementById('c-name').addEventListener('keydown', e => { if (e.key === 'Enter') unlockClient(); });
+
+function unlockClient() {
   const id  = document.getElementById('c-name').value.trim().toUpperCase().replace(/\s+/g,'');
   const err = document.getElementById('code-err');
-  if (!CLIENT_IDS[id]) {
+  if (!CLIENT_DATA[id]) {
     err.textContent = 'Client ID not recognized.';
     return;
   }
   err.textContent = '';
-  go('s-rates');
+  window.currentClientId = id;
+
+  // Update YTD page with client data
+  populateYTD(id);
+
+  // Hide entry, show portal nav
+  document.getElementById('code-entry').style.display = 'none';
+  document.getElementById('portal-nav').style.display = 'block';
+
+  // Update rate card subtitle with client
+  document.querySelector('.rc-sub').textContent = `2026_ZERORH-${id}-MPWRS`;
+}
+
+function populateYTD(clientId) {
+  const client = CLIENT_DATA[clientId];
+  if (!client) return;
+
+  document.getElementById('ytd-client-sub').textContent = `${client.name} — ${clientId}`;
+
+  const tbody = document.getElementById('ytd-ledger');
+  tbody.innerHTML = '';
+
+  let total = 0;
+  const today = new Date();
+
+  if (client.invoices.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-faint);padding:2rem;">No outstanding invoices</td></tr>';
+  } else {
+    client.invoices.forEach(inv => {
+      const dueDate = new Date(inv.dueDate);
+      const daysPast = Math.floor((today - dueDate) / (1000 * 60 * 60 * 24));
+      const isOverdue = daysPast > 0;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${inv.engagement}</td>
+        <td class="mono">${inv.invoiceNum}</td>
+        <td class="mono">${formatDate(inv.invoiceDate)}</td>
+        <td class="mono${isOverdue ? ' overdue' : ''}">${formatDate(inv.dueDate)}${isOverdue ? `<span class="past-due">${daysPast} days past due</span>` : ''}</td>
+        <td class="amt">$${inv.amount.toLocaleString()}</td>
+      `;
+      tbody.appendChild(tr);
+      total += inv.amount;
+    });
+  }
+
+  document.getElementById('ytd-total').textContent = total > 0 ? `$${total.toLocaleString()}` : '$0';
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 // ── ENGAGEMENT FORM ───────────────────────────────────
@@ -768,14 +1046,17 @@ function calcA() {
   else if (aum <= 2000000)  { b1 = 39000;       b2 = (aum-300000)*0.087; }
   else if (aum <= 22000000) { b1 = 39000; b2 = 147900; b3 = (aum-2000000)*0.013; }
   else                      { b1 = 39000; b2 = 147900; b3 = 260000; b4 = Math.min(aum-22000000,18000000)*0.0089; }
-  const YTD_CREDIT = 6280;
+
+  // Dynamic YTD credit based on client's paid invoices (placeholder - would be calculated from paid invoices)
+  const ytdCredit = getClientYTDCredit();
   const fee    = b1+b2+b3+b4;
-  const prepay = Math.max(0, fee - YTD_CREDIT);
+  const prepay = Math.max(0, fee - ytdCredit);
+
   document.getElementById('a-annual').textContent  = fmt(fee);
   document.getElementById('a-monthly').textContent = fmt(fee/12);
   document.getElementById('a-deposit').textContent = fmt(fee*0.30);
   document.getElementById('a-prepay').textContent  = fmt(prepay);
-  document.getElementById('a-saving').textContent  = '− $6,280';
+  document.getElementById('a-saving').textContent  = ytdCredit > 0 ? '− ' + fmt(ytdCredit) : '—';
   document.getElementById('a-b1').textContent = fmt(b1);
   const b2e=document.getElementById('a-b2'); if(b2e) b2e.textContent = b2 ? fmt(b2) : '—';
   const b3e=document.getElementById('a-b3'); if(b3e) b3e.textContent = b3 ? fmt(b3) : '—';
@@ -783,25 +1064,45 @@ function calcA() {
   if(bar) bar.style.background = aumBarColor(aum);
 }
 
+function getClientYTDCredit() {
+  // Returns total paid invoices YTD for credit calculation
+  // For now returns 0 - would be populated based on client payment history
+  // Note: Outstanding invoices are NOT credited, only paid ones
+  return 0;
+}
+
 function calcB() {
   const el  = document.getElementById('t2-weeks');
   const raw = el.value.replace(/[^\d]/g,'');
   const wks = raw ? Math.min(22, Math.max(0, parseInt(raw,10))) : 0;
   const rateEl = document.getElementById('b-rate');
+  const warnEl = document.getElementById('compressed-warn');
+
   if (!wks || wks < 1) {
     ['b-rate','b-total'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent='—'; });
     el.style.color = '';
+    if (warnEl) warnEl.classList.remove('visible');
     return;
   }
-  // Color feedback on input
-  if      (wks < 4)  { el.style.color = '#e05c5c'; }
-  else if (wks < 11) { el.style.color = '#d4914a'; }
-  else               { el.style.color = ''; }
-  // Tiered rate
-  const rate  = wks < 11 ? 6280 : 6000;
-  const total = wks * rate;
-  if(rateEl) rateEl.textContent = fmt(rate) + '/wk';
-  document.getElementById('b-total').textContent   = fmt(total);
+
+  // Show compressed warning for under 4 weeks
+  if (wks <= 4) {
+    if (warnEl) warnEl.classList.add('visible');
+    el.style.color = 'var(--gold)';
+    // Compressed delivery pricing
+    const rate = 10990;
+    const total = Math.max(45000, wks * rate);
+    if(rateEl) rateEl.textContent = fmt(rate) + '/wk';
+    document.getElementById('b-total').textContent = fmt(total) + (total === 45000 ? ' (minimum)' : '');
+  } else {
+    if (warnEl) warnEl.classList.remove('visible');
+    el.style.color = '';
+    // Tiered rate: weeks 1-11 = $6,280, weeks 12-22 = $6,000
+    const rate = wks <= 11 ? 6280 : 6000;
+    const total = wks * rate;
+    if(rateEl) rateEl.textContent = fmt(rate) + '/wk';
+    document.getElementById('b-total').textContent = fmt(total);
+  }
 }
 
 function calcC() {
