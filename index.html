@@ -953,7 +953,7 @@ function submitEngagement() {
   } else if (opt === 'B') {
     const wks = document.getElementById('t2-weeks').value;
     qty   = wks ? `Weeks of engagement: ${wks}` : 'Weeks: not entered';
-    sched = 'Rate schedule: Option B weekly ($6,280 wks 1–10 / $6,000 wks 11–22)';
+    sched = 'Rate schedule: Option B weekly ($6,280 wks 1–11 / $6,000 wks 12–22)';
   } else {
     const shows = document.getElementById('t3-shows').value;
     qty   = shows ? `Number of shows: ${shows}` : 'Shows: not entered';
@@ -1101,7 +1101,7 @@ function calcB() {
   } else {
     if (warnEl) warnEl.classList.remove('visible');
     el.style.color = '';
-    // Tiered rate: weeks 1-11 = $6,280, weeks 12-22 = $6,000
+    // Prestige rate: weeks 1-11 = $6,280, weeks 12-22 = $6,000 (list: $8,280 / $6,280)
     const rate = wks <= 11 ? 6280 : 6000;
     const total = wks * rate;
     if(rateEl) rateEl.textContent = fmt(rate) + '/wk';
