@@ -814,6 +814,9 @@ function go(id) {
       const tabs = document.querySelector('.opt-tabs');
       if (tabs) tabs.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 380);
+  } else if (id === 's-ytd' && window.currentClientId) {
+    populateYTD(window.currentClientId);
+    window.scrollTo(0, 0);
   } else if (id === 's-code') {
     // Show portal nav if client already validated
     if (window.currentClientId) {
