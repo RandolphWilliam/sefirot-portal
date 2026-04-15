@@ -458,6 +458,7 @@
 <!-- ══ SECTION 2: NDA ══════════════════════════════════ -->
 <div id="s-nda">
 <form class="nda-wrap" id="nda-form" autocomplete="off" onsubmit="submitNDA(event)" style="max-width:520px;">
+  <input type="hidden" name="_form" value="Sefirot Client Portal NDA">
 
   <div class="nda-hdr">
     <img src="Just quill.gif?v=2" class="nda-sigil" alt="Sefirot">
@@ -837,15 +838,42 @@ function submitNDA(e) {
   const fd  = new FormData(f);
   const sig  = fd.get('signature');
   const name = fd.get('name');
+  const email = fd.get('email');
   const err  = document.getElementById('nda-err');
+  const btn  = document.getElementById('submit-btn');
 
   if (!sig || !name) {
     err.textContent = 'Please enter your name and signature.';
     return;
   }
   err.textContent = '';
-  // Local file — NDA captured client-side only. No network call.
-  go('s-code');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  // Add metadata
+  fd.append('_subject', `NDA Signed: ${name}`);
+  fd.append('signed_at', new Date().toISOString());
+
+  // Submit to Formspree (silent, non-blocking)
+  fetch('https://formspree.io/f/xjgplzyj', {
+    method: 'POST',
+    body: fd,
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(response => {
+    if (response.ok) {
+      go('s-code');
+    } else {
+      // Still proceed even if Formspree fails (offline capability)
+      console.warn('Formspree submission failed, proceeding anyway');
+      go('s-code');
+    }
+  })
+  .catch(error => {
+    // Network error - still proceed (offline capability)
+    console.warn('Network error on NDA submit:', error);
+    go('s-code');
+  });
 }
 
 // ── CLIENT CODE & DATA ─────────────────────────────────
