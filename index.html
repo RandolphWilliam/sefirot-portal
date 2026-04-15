@@ -315,7 +315,8 @@
     text-transform: uppercase; cursor: pointer; font-family: inherit;
     transition: all 0.2s; text-align: left;
   }
-  .portal-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .portal-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+  .portal-btn.disabled { opacity: 0.45; cursor: not-allowed; color: var(--text-faint); }
 
   /* ── YTD / AR PAGE ── */
   #s-ytd, #s-docs {
@@ -511,7 +512,7 @@
     <div class="portal-btns">
       <button class="portal-btn" onclick="go('s-rates')">Rate Card</button>
       <button class="portal-btn" onclick="go('s-ytd')">Year to Date Invoices</button>
-      <button class="portal-btn" onclick="go('s-docs')">Documents</button>
+      <button class="portal-btn disabled" disabled title="Access will be restored when client A/R is current — please call 973.573.2261 with questions or concerns">Documents</button>
     </div>
   </div>
   <img src="Just quill.gif?v=2" class="code-quill" alt="">
