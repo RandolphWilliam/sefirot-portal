@@ -11,9 +11,14 @@
     html, body { margin: 0; background: var(--paper); color: var(--ink); }
     body { font: 17px/1.55 Georgia, "Times New Roman", serif; }
     main { max-width: 34rem; margin: 0 auto; padding: 18vh 16px 10vh; }
-    .mark { display: inline-block; width: 2.6rem; height: 2.6rem; border: 2px solid var(--green); color: var(--green);
-            text-align: center; line-height: 2.5rem; font-weight: 700; font-size: 1.35rem; margin-bottom: 1.6rem; }
-    h1 { font-size: 1.25rem; font-weight: 400; letter-spacing: .02em; margin: 0 0 1.2rem; }
+    /* Mark rule (2026-10-06): the box sits LEFT of the capitalized word, on the same line,
+       no wider than two letters and no taller than 1.7 letter-heights of the wordmark.
+       At the wordmark's font size, a 1.2em square satisfies both limits. */
+    .wordmark { display: flex; align-items: center; gap: .55em; font-size: 1.25rem; margin: 0 0 1.2rem; }
+    .mark { flex: 0 0 auto; width: 1.2em; height: 1.2em; border: 2px solid var(--green); color: var(--green);
+            box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1em; line-height: 1; }
+    h1 { font-size: 1em; font-weight: 400; letter-spacing: .02em; margin: 0; }
     p { margin: 0 0 1rem; }
     hr { border: 0; border-top: 1px solid var(--rule); margin: 1.8rem 0; }
     a { color: var(--green); }
@@ -22,8 +27,7 @@
 </head>
 <body>
   <main>
-    <div class="mark">S</div>
-    <h1>Sefirot Consulting LLC</h1>
+    <div class="wordmark"><span class="mark" aria-hidden="true">S</span><h1>SEFIROT Consulting LLC</h1></div>
     <p>The client portal has moved. Engagement records are now shared directly with each client.</p>
     <p>For your records, or to start a conversation, write to <a href="mailto:office@sefirotconsulting.com">office@sefirotconsulting.com</a>.</p>
     <hr>
